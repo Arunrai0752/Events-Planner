@@ -12,6 +12,7 @@ import Morepages from "./pages/Morepages";
 import Services from "./pages/Services";
 import Stories from "./pages/Stories";
 import Loginpage from "./pages/Loginpage";
+import Register from "./pages/Register";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/services" element={<Services />} />
         <Route path="/stories" element={<Stories />} />
         <Route path="/login" element={<Loginpage/>}/>
+        <Route path="/register" element={<Register/>}/>
       </Routes>
     </BrowserRouter>
   );
