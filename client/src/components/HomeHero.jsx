@@ -1,34 +1,37 @@
 import React from "react";
 import { CiDesktopMouse2 } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <>
-      <main className=" bg-[url(bg-homepage.jpg)] h-screen w-full bg-cover bg-center ">
-        <div className=" bg-black/45 h-screen w-screen grid  justify-center  text-white text-2xl  ">
+      <main className=" bg-[url(bg-homepage.jpg)] h-screen w-full bg-cover bg-center  ">
+        <div className=" bg-black/60 h-screen w-screen grid  justify-center  text-white text-2xl  ">
           <div className="  h-[70vh] bg-transparent w-screen relative top-[20vh] grid justify-center text-center items-center">
             <h1 className=" w-screen  text-7xl font-bold text-center ">
-              Turning Dreams <br /> into Reality
+              Where Love <br /> Stories Begin
             </h1>
             <p lassName=" w-full   text-7xl font-bold text-center">
-              Donec efficitur, ligula ut lacinia viverra, lorem lacus
-              condimentum leo, eu luctus <br /> dolor ex at quam. Fusce ac
-              condimentum turpis. Ut consequat lacinia augue
+              Let us craft the perfect beginning to your forever
             </p>
 
             <div lassName=" w-full  gap-10 text-8xl font-bold text-center">
-              <button className=" bg-pink-400 tect-white font-bold border-0 border-pink-400 px-6 py-3 m-2 hover:bg-pink-500">Book Now</button>
-              <button className=" bg-transparent text-pink-400 font-bold border-1 border-pink-400 px-6 py-3 m-2  hover:bg-pink-500 hover:text-white" >Read More</button>
-            
-             <div className="flex justify-center p-5 text-6xl font-extrabold">
+              <button onClick={()=> navigate("/login") } className="bg-[#F5E6C8] cursor-pointer text-[#6D4C3D] font-bold border-2 border-transparent px-8 py-3 m-2 hover:bg-[#E8D5B5] hover:text-[#4A3529] hover:border-[#D4AF37] transition-all duration-300  shadow-md hover:shadow-lg rounded-lg hover:scale-[1.02]">
+                Plan Your Special Day
+              </button>
 
-              <span><CiDesktopMouse2 /></span>
-
+              <button className="bg-[#FAF7F0] cursor-pointer text-[#B38B6D] font-bold border-2 border-transparent px-6 py-3 m-2 hover:bg-[#F0E6D2] hover:text-[#8A6D56] hover:border-[#C8D5BB] transition-all duration-300 shadow-sm hover:shadow-md rounded-lg hover:scale-[1.01]">
+                Discover Our Portfolio
+              </button>
+              <div className="flex justify-center p-5 text-6xl font-extrabold">
+                <span>
+                  <CiDesktopMouse2 />
+                </span>
+              </div>
             </div>
-            </div>
-
-           
           </div>
         </div>
       </main>

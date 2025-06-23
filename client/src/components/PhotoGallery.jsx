@@ -16,8 +16,8 @@ const PhotoGallery = () => {
         <div className="bg-transparent w-screen text-center leading-30 p-20   grid  gap-8 justify-center items-center" >
         
         <p className="text-7xl text-center text-pink-500  relative left-60 "><GrGallery /></p>
-         <h1 className="text-5xl font-extrabold">Photo Gallery</h1>
-         <p className="text-2xl">Purus velit at volutpat sapien ullamcorper rhoncus.</p>
+         <h1 className="text-5xl text-[#D4AF37] font-extrabold">Photo Gallery</h1>
+         <p className="text-[#6D4C3D]	 text-2xl">Purus velit at volutpat sapien ullamcorper rhoncus.</p>
         </div>
 
 
