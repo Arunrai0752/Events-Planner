@@ -23,7 +23,7 @@ const Loginpage = () => {
   return (
     <>
       <main>
-        <form  className="bg-[url(Login.jpg)] bg-cover bg-fixed bg-center  h-screen" 
+        <form  className="bg-[url(Login.jpg)] bg-cover bg-center  h-screen" 
                   onSubmit={Submitform} 
  >
           <div className="bg-black/60 h-screen w-screen  flex justify-center  items-center">

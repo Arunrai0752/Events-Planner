@@ -26,6 +26,7 @@ const App = () => {
         <Route path="/login" element={<Loginpage/>}/>
         <Route path="/register" element={<Register/>}/>
       </Routes>
+      <Footer/>
     </BrowserRouter>
   );
 };
