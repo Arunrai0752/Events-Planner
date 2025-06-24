@@ -54,7 +54,7 @@ const Loginpage = () => {
               </div>
 
               <div className="w-full flex justify-center items-center">
-                <button className="bg-amber-300 h-15 rounded-[8px] w-[80%] hover:bg-amber-700 hover:text-amber-400 ">
+                <button type="submit" className="bg-amber-300 h-15 rounded-[8px] w-[80%] hover:bg-amber-700 hover:text-amber-400 ">
                   Log In
                 </button>
               </div>
@@ -71,7 +71,7 @@ const Loginpage = () => {
               <div className="text-center">
                 <h1>
                   Dont Have An Account /{" "}
-                  <Link onClick={() => navigate("/register")} to={"/register"}>
+                  <Link className="underline" to={"/register"}>
                     Register Here
                   </Link>
                 </h1>

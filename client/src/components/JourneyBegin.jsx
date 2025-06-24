@@ -50,11 +50,11 @@ const JourneyBegin = () => {
             </Link>
           </div>
           <div className="w-[85%] flex ">
-            <div className="w-[50%] relative z-20 top-17 left-40">
+            <div className="w-[50%]  relative z-20 top-17 left-40">
               <img src={bride} alt="" className=" h-[100%] w-[100%]" />
             </div>
-            <div className="bg-pink-500 w-[65%] h-[112%] text-white text-4xl  px-30 font-bold  ] ">
-              <p className="relative right-9 top-15 text-pink-100 z-50">
+            <div className="bg-pink-500 w-[65%] h-[112%] text-red-400 text-4xl  px-30 font-bold  ] ">
+              <p className="relative right-9 top-15 text-blue-900 z-50">
                 {" "}
                 Choose a life partner not because you can merely live with them,
                 but because you cannot imagine living without them
