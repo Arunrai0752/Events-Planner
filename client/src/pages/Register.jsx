@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Register = () => {
+  const [registerData, setRegisterData] = useState({
+    firstname: "",
+    lastname: "",
+    phonenumber: "",
+    email: "",
+    password: "",
+    cpassword: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setRegisterData((previousData) => ({ ...previousData, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(registerData);
+
+    setRegisterData({
+      firstname: "",
+      lastname: "",
+      phonenumber: "",
+      email: "",
+      password: "",
+      cpassword: "",
+    });
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="bg-[url(Register.jpg)] h-screen wifull bg-cover bg-center">
           <div className="bg-black/70 h-screen wifull flex justify-center items-center  ">
             <div className="relative top-10 rounded-4xl h-[70%] w-[40%] grid justify-center  bg-white">
@@ -16,6 +46,10 @@ const Register = () => {
                     type="name"
                     className="h-fit w-full p-2 outline-0 "
                     placeholder="Enter Your First Name"
+                    value={registerData.firstname}
+                    name="firstname"
+                    onChange={handleChange}
+                    required
                   />
                 </div>
                 <div className=" w-[45%] h-[30% ] p-2">
@@ -24,6 +58,10 @@ const Register = () => {
                     type="name"
                     className="h-fit w-full p-2 outline-0  "
                     placeholder="Enter Your Last Name"
+                    value={registerData.lastname}
+                    name="lastname"
+                    onChange={handleChange}
+                    required
                   />
                 </div>
               </div>
@@ -35,6 +73,10 @@ const Register = () => {
                     type="Tel"
                     className="h-fit w-full p-2 outline-0 "
                     placeholder="Enter Your Phone Number"
+                    onChange={handleChange}
+                    value={registerData.phonenumber}
+                    name="phonenumber"
+                    required
                   />
                 </div>
                 <div className=" w-[45%] h-[30% ] p-2">
@@ -43,6 +85,10 @@ const Register = () => {
                     type="email"
                     className="h-fit w-full p-2 outline-0 "
                     placeholder="Enter Your  Email Address "
+                    name="email"
+                    value={registerData.email}
+                    onChange={handleChange}
+                    required
                   />
                 </div>
               </div>
@@ -54,6 +100,10 @@ const Register = () => {
                     type="password"
                     className="h-fit w-full p-2 outline-0 "
                     placeholder="Enter A Strong Password"
+                    name="password"
+                    value={registerData.password}
+                    onChange={handleChange}
+                    required
                   />
                 </div>
                 <div className=" w-[45%] h-[30% ] p-2">
@@ -62,27 +112,28 @@ const Register = () => {
                     type="password"
                     className="h-fit w-full p-2 outline-0  "
                     placeholder="Re-Enter Your Password"
+                    name="cpassword"
+                    onChange={handleChange}
+                    required
                   />
                 </div>
-              </div >
-
-
-
+              </div>
 
               <div className="w-full flex justify-center i">
-
-                    <button className="Registerbutton bg-amber-400 w-[70%] h-[100%] cursor-pointer hover:bg-green-400 hover:text-amber-800 " >Register</button>
-
-                
+                <button className="Registerbutton bg-amber-400 w-[70%] h-[100%] cursor-pointer hover:bg-green-400 hover:text-amber-800 ">
+                  Register
+                </button>
               </div>
 
-
-               <div className="w-full flex h-[20%] justify-center py-4">
-
-              <h1>Already Have An Account/  <Link to="/login" className="underline" > Login Here </Link>  </h1>
-                
+              <div className="w-full flex h-[20%] justify-center py-4">
+                <h1>
+                  Already Have An Account/{" "}
+                  <Link to="/login" className="underline">
+                    {" "}
+                    Login Here{" "}
+                  </Link>{" "}
+                </h1>
               </div>
-            
             </div>
           </div>
         </div>

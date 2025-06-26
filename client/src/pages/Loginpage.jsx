@@ -53,7 +53,7 @@ const Loginpage = () => {
                 </div>
               </div>
 
-              <div className="w-full flex justify-center items-center">
+              <div className="w-full flex justify-center items-center mt-8">
                 <button type="submit" className="bg-amber-300 h-15 rounded-[8px] w-[80%] hover:bg-amber-700 hover:text-amber-400 ">
                   Log In
                 </button>

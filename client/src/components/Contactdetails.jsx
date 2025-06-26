@@ -9,7 +9,7 @@ const Contactdetails = () => {
     <>
       <main>
         <div className="bg-blue-100 w-screen grid    ">
-          <div className=" w-[85%] flex bg-yellow-200 rounded-4xl text-center  justify-evenly mb-20 relative left-[7.5%] bottom-[80px]">
+          <div className=" w-[85%] flex bg-gray-200 rounded-4xl text-center  justify-evenly mb-20 relative left-[7.5%] bottom-[80px]">
             <div className=" w-[27%] grid p-5 gap-5 ">
               <div className="flex justify-center">
                 <p className="text-6xl text-center ">
@@ -29,8 +29,15 @@ const Contactdetails = () => {
                 </p>
               </div>
               <h1 className="text-4xl">Email Address​</h1>
-              <p className="text-1xl leading-9">
-                arunr2081@gmail.com || realarunrai0752@gmail.com
+              <p className="text-1xl grid leading-9">
+<a href="mailto:arunr2081@gmail.com" target="_blank" rel="noopener noreferrer">
+  arunr2081@gmail.com
+</a>
+
+<a href="mailto:realarunrai0752@gmail.com" target="_blank" rel="noopener noreferrer">
+  realarunrai0752@gmail.com
+</a>
+
               </p>
             </div>
 
@@ -41,11 +48,11 @@ const Contactdetails = () => {
                 </p>
               </div>
               <h1 className="text-4xl">Phone Number​</h1>
-              <p className="text-1xl leading-9">9098209835 || 9090909090 </p>
+              <a href="tel: +919098209835" className="text-1xl leading-9">9098209835</a>
             </div>
           </div>
 
-          <div className=" w-[85%] flex bg-yellow-50 rounded-4xl text-center  justify-evenly mb-20 relative left-[7.5%] bottom-[80px]">
+          <div className=" w-[85%] flex bg-yellow-50  text-center  justify-evenly mb-20 relative left-[7.5%] bottom-[80px]">
             <div className="w-[50%] ">
               <img src={chat} alt="" className=" h-[900px] bg-center " />
             </div>
@@ -68,6 +75,7 @@ const Contactdetails = () => {
                     placeholder="Email"
                     className="outline-0 border-b-2"
                   />
+
                   <select
                     name="Budgets"
                     id="budgets"

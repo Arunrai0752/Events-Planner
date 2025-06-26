@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <>
       <main>
-        <div className="bg-[url(footer.jpg)] h-[600px] text-white w-screen bg-center bg-cover flex justify-center ">
+        <div className="bg-[url(footer.jpg)] h-[600px] text-yellow-800 w-screen bg-center bg-cover flex justify-center ">
           <div className="flex w-[80%] text-start pt-30">
             <div className="w-[20%] ">
               <h1 className="text-3xl py-4">Head Office</h1>

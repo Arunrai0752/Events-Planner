@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Hero = () => {
   const navigate = useNavigate();
 
+ 
   return (
     <>
       <main className=" bg-[url(bg-homepage.jpg)] h-screen w-full bg-cover bg-center  ">
