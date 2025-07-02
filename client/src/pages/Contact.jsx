@@ -3,12 +3,17 @@ import Contactushero from "../components/Contactshero";
 import Contactdetails from "../components/Contactdetails";
 
 const Contact = () => {
+  
+
   return (
-    <>
-      <Contactushero/>
-      <Contactdetails/>
-    </>
+    <div>
+        <Contactushero/>
+        <Contactdetails/>
+
+    </div>
   );
+
+  
 };
 
 export default Contact;
