@@ -1,9 +1,12 @@
 import express from "express";
- const router = express.Router();
  import { register, login ,logout } from "../controllers/authConntroller.js";
+ import {A ,B ,C} from "../middlewares/authMiddleWare.js"
 
- router.post ("/register", register)
- router.post ("/login", login)
- router.post ("/logout", logout)
+  const router = express.Router();
+
+
+ router.post ("/register", A ,B , register)
+ router.post ("/login", A, C, login)
+ router.post ("/logout", B , A, logout)
 
  export default router;
