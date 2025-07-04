@@ -1,12 +1,16 @@
 import express from "express";
- import { register, login ,logout } from "../controllers/authConntroller.js";
- import {A ,B ,C} from "../middlewares/authMiddleWare.js"
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+  updateUser,
+} from "../controllers/authConntroller.js";
 
-  const router = express.Router();
+const router = express.Router();
 
+router.post("/register", registerUser);
+router.post("/login", loginUser);
+router.post("/logout", logoutUser);
+router.put("/update", updateUser);
 
- router.post ("/register", A ,B , register)
- router.post ("/login", A, C, login)
- router.post ("/logout", B , A, logout)
-
- export default router;
+export default router;

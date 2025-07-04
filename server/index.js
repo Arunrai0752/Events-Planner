@@ -1,24 +1,25 @@
 import express from "express";
-import authRouter from "./src/routes/authRouter.js";
+import AuthRouter from "./src/routes/AuthRouter.js";
 import dotenv from "dotenv";
 import connectDB from "./src/config/db.js";
-import {A ,B ,C} from "../server/src/middlewares/authMiddleWare.js"
+import { A, B, C } from "../server/src/middlewares/authMiddleWare.js";
 dotenv.config();
+const app = express();
+app.use(express.json());
 
-const App = express();
-App.use(express.json());
-App.use(A,B,C)
-App.use("/auth", authRouter);
+app.use(A, B, C);
+app.use("/auth", AuthRouter);
 
-App.get("/", (req, res) => {
-  res.json({ message: "i am Backend" });
+
+app.use((err, req, res, next) => {
+  const errormessage = err.message || "Internal Server Error";
+  const errorCode = err.statusCode || 500;
+  res.status(errorCode).json({message:errormessage})
 });
-
-// const port = 2323;
 
 const port = process.env.PORT || 2323;
 
-App.listen(port,  () => {
+app.listen(port, () => {
   console.log(`http://localhost:${port}/register`);
-    connectDB();
+  connectDB();
 });
