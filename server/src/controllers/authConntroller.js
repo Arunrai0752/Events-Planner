@@ -23,7 +23,7 @@ export const registerUser = async (req, res, next) => {
       lastname,
       email,
       phonenumber,
-      password:hashedpass,
+      password: hashedpass,
     });
     res.status(201).json({ Message: "Registation Succecfull" });
   } catch (error) {
@@ -31,14 +31,39 @@ export const registerUser = async (req, res, next) => {
   }
 };
 
-export const loginUser = (req, res) => {
-  res.json({ message: "User Loged In Success" });
+export const loginUser = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      const error = new Error("All Fields Required");
+      error.statusCode = 408;
+      return next(error);
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      const error = new Error("User Not registered");
+      error.statusCode = 408;
+      return next(error);
+    }
+    const isVerified = await bcrypt.compare(password, user.password);
+    if (!isVerified) {
+      const error = new Error("Invalid Username or Password");
+      error.statusCode = 401;
+      return next(error);
+    }
+    res
+      .status(200)
+      .json({
+        Message: `WelcomeBack ${user.firstname} ${user.lastname}`,
+        data: user,
+      });
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const logoutUser = (req, res) => {
-  res.json({ message: "User Loged Out Success" });
-};
 
-export const updateUser = (req, res) => {
-  res.json({ message: "User update Out Success" });
-};
+
+export const logoutUser = (req, res) => {};
+
+export const updateUser = (req, res) => {};
