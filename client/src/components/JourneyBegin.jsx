@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 const JourneyBegin = () => {
   return (
     <>
-      <main className=" w-screen h-auto pb-40 bg-pink-100   justify-center items-center grid ">
+      <main className=" w-screen h-auto pb-40 bg-[#7d6d48]
+0   justify-center items-center grid ">
         <div className="w-[85vw] py-10 bg-white relative bottom-18 left-[7.5%]">
           <div className=" text-center">
             <p className="text-6xl flex justify-center p-10 text-pink-500">

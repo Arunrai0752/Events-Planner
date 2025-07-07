@@ -1,5 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import gentoken from "../utils/auth.js";
+
 export const registerUser = async (req, res, next) => {
   try {
     const { firstname, lastname, email, phonenumber, password } = req.body;
@@ -25,7 +27,7 @@ export const registerUser = async (req, res, next) => {
       phonenumber,
       password: hashedpass,
     });
-    res.status(201).json({ Message: "Registation Succecfull" });
+    res.status(201).json({ message: "Registation Succecfull" });
   } catch (error) {
     next(error);
   }
@@ -34,9 +36,10 @@ export const registerUser = async (req, res, next) => {
 export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+
     if (!email || !password) {
       const error = new Error("All Fields Required");
-      error.statusCode = 408;
+      error.statusCode = 409;
       return next(error);
     }
     const user = await User.findOne({ email });
@@ -51,18 +54,17 @@ export const loginUser = async (req, res, next) => {
       error.statusCode = 401;
       return next(error);
     }
-    res
-      .status(200)
-      .json({
-        Message: `WelcomeBack ${user.firstname} ${user.lastname}`,
-        data: user,
-      });
+
+    gentoken(user._id, res);
+
+    res.status(200).json({
+      message: `WelcomeBack ${user.firstname} ${user.lastname}`,
+      data: user,
+    });
   } catch (error) {
     next(error);
   }
 };
-
-
 
 export const logoutUser = (req, res) => {};
 

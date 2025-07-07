@@ -11,7 +11,7 @@ import img6 from "../assets/gallery-6.jpg"
 const PhotoGallery = () => {
   return (
     <>
-      <main className="bg-white w-screen p-20">
+      <main className="bg-[#B3B3B3] w-screen p-20">
 
         <div className="bg-transparent w-screen text-center leading-30 p-20   grid  gap-8 justify-center items-center" >
         

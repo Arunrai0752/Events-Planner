@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../config/api.jsx";
+import {toast} from "react-hot-toast"
 
 const Loginpage = () => {
   const navigate = useNavigate();
@@ -7,25 +9,34 @@ const Loginpage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const Submitform = (e) => {
+  const Submitform = async (e) => {
     e.preventDefault();
 
     const loginData = {
-      Email: email,
-      Password: password,
+      email: email,
+      password: password,
     };
+
     console.log(loginData);
 
-    setEmail("");
-    setPassword("");
+    try {
+      const res = await api.post("/auth/login", loginData);
+      toast.success(res.data.message);
+      setEmail("");
+      setPassword("");
+      navigate('/UserDashboard')
+    } catch (error) {
+toast.error(`Error: ${error?.response?.message || ""} | ${error?.response?.data?.message || "Something went wrong"}`);
+    }
   };
 
   return (
     <>
       <main>
-        <form  className="bg-[url(Login.jpg)] bg-cover bg-center  h-screen" 
-                  onSubmit={Submitform} 
- >
+        <form
+          className="bg-[url(Login.jpg)] bg-cover bg-center  h-screen"
+          onSubmit={Submitform}
+        >
           <div className="bg-black/60 h-screen w-screen  flex justify-center  items-center">
             <div className="h-[60%] w-[40%] bg-white/75 rounded-4xl  grid justify-center  ">
               <div className="h-[60%] relative top-5  w-[100%]  grid items-center-safe">
@@ -54,7 +65,10 @@ const Loginpage = () => {
               </div>
 
               <div className="w-full flex justify-center items-center mt-8">
-                <button type="submit" className="bg-amber-300 h-15 rounded-[8px] w-[80%] hover:bg-amber-700 hover:text-amber-400 ">
+                <button
+                  type="submit"
+                  className="bg-amber-300 h-15 rounded-[8px] w-[80%] hover:bg-amber-700 hover:text-amber-400 "
+                >
                   Log In
                 </button>
               </div>

@@ -11,10 +11,13 @@ import Services from "./pages/Services";
 import Stories from "./pages/Stories";
 import Loginpage from "./pages/Loginpage";
 import Register from "./pages/Register";
+import {Toaster} from "react-hot-toast"
+import UserDashboard from "./pages/userDashboard";
 
 const App = () => {
   return (
     <BrowserRouter>
+    <Toaster/>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -25,6 +28,7 @@ const App = () => {
         <Route path="/stories" element={<Stories />} />
         <Route path="/login" element={<Loginpage/>}/>
         <Route path="/register" element={<Register/>}/>
+        <Route path="/UserDashboard" element={<UserDashboard/>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>
