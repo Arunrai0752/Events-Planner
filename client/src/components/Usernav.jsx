@@ -58,7 +58,7 @@ const Usernav = () => {
           </ul>
         </div>
         <div>
-          <button className=" px-5 py-2 rounded-4xl bg-amber-400  flex justify-center items-center gap-2 bord" onClick={() => Navigate("/UserDashboard")} >
+          <button className=" px-5 py-2 rounded-4xl bg-amber-200 hover:bg-amber-300 flex justify-center items-center gap-2 bord" onClick={() => Navigate("/UserDashboard")} >
             <span className="h-14 w-20 p-1 flex items-center border-1 rounded-4xl bg-black ">
               <p className="bg-[url(wednesday.jpg)] h-12 w-19 rounded-4xl border-2  p-1 bg-cover bg-no-repeat bg-center "></p>
             </span>
