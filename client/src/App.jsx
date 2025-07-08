@@ -12,13 +12,16 @@ import Stories from "./pages/Stories";
 import Loginpage from "./pages/Loginpage";
 import Register from "./pages/Register";
 import {Toaster} from "react-hot-toast"
-import UserDashboard from "./pages/userDashboard";
+import Usernav from "./components/Usernav";
+import UserDashboard from "./pages/UserDashboard";
+
+
 
 const App = () => {
   return (
     <BrowserRouter>
     <Toaster/>
-      <Navbar />
+      <Usernav />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

@@ -55,14 +55,14 @@ const JourneyBegin = () => {
               <img src={bride} alt="" className=" h-[100%] w-[100%]" />
             </div>
             <div className="bg-pink-500 w-[65%] h-[112%] text-red-400 text-4xl  px-30 font-bold  ] ">
-              <p className="relative right-9 top-15 text-blue-900 z-50">
+              <p className="relative right-9 top-15 text-black z-50">
                 {" "}
                 Choose a life partner not because you can merely live with them,
                 but because you cannot imagine living without them
               </p>
               <br />
               <br />
-              <h1 className="relative right-9 top-10 z-50 signature">Arun</h1>
+              <h1 className="relative  top-10 z-50 signature text-black">Arun</h1>
             </div>
           </div>
         </div>

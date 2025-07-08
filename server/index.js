@@ -4,15 +4,19 @@ import AuthRouter from "./src/routes/AuthRouter.js";
 import dotenv from "dotenv";
 import connectDB from "./src/config/db.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+import userRouter from "./src/routes/userRoutes.js"
 
 dotenv.config();
 const app = express();
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.use("/auth", AuthRouter);
+app.use("/user",userRouter)
 
 app.use((err, req, res, next) => {
   const errormessage = err.message || "Internal Server Error";
