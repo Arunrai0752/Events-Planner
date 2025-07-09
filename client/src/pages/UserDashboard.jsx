@@ -28,25 +28,19 @@ const UserDashboard = () => {
     }
   };
 
-  useEffect(() => {
+  useEffect(() =>  {
     fetchUserData();
   }, []);
 
   return (
-    <main className="min-h-screen relative top-20  bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          {/* Profile Header */}
-          <div className="bg-gradient-to-r from-black to-blue-400 p-8 text-white">
-            <h1 className="text-3xl font-bold">
-              {userData.firstname}'s Profile
-            </h1>
+    <main className="bg-blue-300 min-h-screen  ">
+      <div className="relative top-20">
+        <div className="bg-white overflow-hidden">
+          <div className="bg-gradient-to-r from-black text-center text-4xl to-blue-400 p-8 text-white">
+            
             <p className="opacity-90 mt-2">Welcome to your dashboard</p>
           </div>
-
-          {/* Profile Content */}
-          <div className="grid md:grid-cols-3 gap-8 p-8">
-            {/* Profile Card */}
+          <div className=" grid justify-center gap-8 p-8">
             <div className=" bg-gray-50 rounded-xl p-6 shadow-sm flex flex-col items-center">
               <div className="relative mb-6">
                 <div className=" bg-[url(wednesday.jpg)] bg-cover bg-center h-32 w-32 rounded-full  flex items-center justify-center"></div>
@@ -81,8 +75,7 @@ const UserDashboard = () => {
               </button>
             </div>
 
-            {/* Contact Info */}
-            <div className="space-y-6">
+            <div className=" flex ">
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <div className="flex items-center mb-4">
                   <div className="bg-blue-100 p-3 rounded-full mr-4">
@@ -114,8 +107,8 @@ const UserDashboard = () => {
               </div>
             </div>
 
-            {/* Additional Info */}
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="bg-white p-6 
+            text-center rounded-xl shadow-sm">
               <h3 className="text-lg font-medium text-gray-700 mb-4">
                 Account Details
               </h3>

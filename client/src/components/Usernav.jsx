@@ -1,72 +1,116 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { PiCirclesFour } from "react-icons/pi";
-import { FaHeart } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import UserDashboard from "../pages/UserDashboard";
+import { FaHeart, FaUserCircle } from "react-icons/fa";
+import { useNavigate  } from "react-router-dom";
+import api from "../config/api";
+import toast from "react-hot-toast";
+
 
 const Usernav = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
+
+  const [userData, setUserData] = useState({
+      firstname: "My",
+    });   
+
+
+  const fetchUserData = async () => {
+    try {
+      const res = await api.get("/user/profile");
+      setUserData(res.data.data);
+      toast.success(res.data.message);
+    } catch (error) {
+      toast.error(
+        `Error : ${error.response?.status || error.message} | ${
+          error.response?.data.message || ""
+        }`
+      );
+    }
+  };
+  
+    useEffect(() =>  {
+      fetchUserData(  );
+    }, [navigate]);
+  
   return (
-    <>
-      <nav className="text-black flex items-center justify-around bg-white/50 w-full absolute z-20 p-1  ">
-        <div>
-          <li className="bg-[url(logo.png)] h-[100px] w-[100px] grid bg-cover bg-center ">
-            <Link to="/" className="hover:text-gray-300 relative top-6 right-3">
-              <span className="grid justify-center text-2xl items-center text-red-700 ">
-                <FaHeart />
-              </span>
-              <h1 className="text-1xl font-bold text-center text-black  ">
-                Two Souls
-              </h1>
-              <span className="block text-center text-black  text-1xl">
-                One Promise
-              </span>
+    <nav className="bg-white shadow-md w-full fixed top-0 z-50">
+      <div className="max-w-7xl mx-auto  sm:px-6 lg:px-8">
+        <div className="flex justify-between h-20 items-center">
+          
+          <div className="flex-shrink-0 flex items-center">
+            <img src="logo.png" alt=""  className="flex justify-between h-20 items-center " />
+            <Link 
+              to="/" 
+              className="flex items-center space-x-2 transform hover:scale-105 transition duration-300"
+            >
+              <FaHeart className="text-3xl text-rose-600 animate-pulse" />
+              <div className="text-center">
+                <h1 className="text-xl font-bold text-gray-800 font-serif">Two Souls</h1>
+                <p className="text-sm text-gray-600 font-serif">One Promise</p>
+              </div>
             </Link>
-          </li>
+          </div>
+
+        
+          <div className="hidden md:block">
+            <ul className="ml-10 flex items-center space-x-8">
+              <li>
+                <Link 
+                  to="/about" 
+                  className="text-gray-700 hover:text-rose-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300"
+                >
+                  ABOUT
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/stories" 
+                  className="text-gray-700 hover:text-rose-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300"
+                >
+                  STORIES
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/services" 
+                  className="text-gray-700 hover:text-rose-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300"
+                >
+                  SERVICES
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/gallery" 
+                  className="text-gray-700 hover:text-rose-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300"
+                >
+                  GALLERY
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/contact" 
+                  className="text-gray-700 hover:text-rose-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300"
+                >
+                  CONTACT
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="ml-4 flex items-center md:ml-6">
+            <button 
+              onClick={() => navigate("/UserDashboard")}
+              className="flex items-center space-x-2 bg-gradient-to-r from-rose-500 to-amber-400 text-white px-4 py-2 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-1000"
+            >
+              <div className=" bg-[url(wednesday.jpg)] h-8 w-8 rounded-2xl bg-center bg-cover text-xl">
+
+              </div>
+              <span className="font-medium"> {userData.firstname }'s Profile</span>
+            </button>
+          </div>
         </div>
-        <div>
-          <ul className="flex  gap-8 bg-transparent  list-none items-center font-bold text-white">
-            <li>
-              <Link to="/about" className="  text-black  hover:text-gray-300">
-                ABOUT
-              </Link>
-            </li>
-            <li>
-              <Link to="/stories" className=" text-black   hover:text-gray-300">
-                STORIES
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/services"
-                className="hover:text-gray-300  text-black  "
-              >
-                SERVICES
-              </Link>
-            </li>
-            <li>
-              <Link to="/gallery" className="hover:text-gray-300  text-black  ">
-                GALLERY
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" className="hover:text-gray-300 text-black  ">
-                CONTACT
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <button className=" px-5 py-2 rounded-4xl bg-amber-200 hover:bg-amber-300 flex justify-center items-center gap-2 bord" onClick={() => Navigate("/UserDashboard")} >
-            <span className="h-14 w-20 p-1 flex items-center border-1 rounded-4xl bg-black ">
-              <p className="bg-[url(wednesday.jpg)] h-12 w-19 rounded-4xl border-2  p-1 bg-cover bg-no-repeat bg-center "></p>
-            </span>
-            My Profile
-          </button>
-        </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 };
 

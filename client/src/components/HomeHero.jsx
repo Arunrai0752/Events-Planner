@@ -15,11 +15,11 @@ const Hero = () => {
             <h1 className=" w-screen  text-7xl font-bold text-center ">
               Where Love <br /> Stories Begin
             </h1>
-            <p lassName=" w-full   text-7xl font-bold text-center">
+            <p className=" ">
               Let us craft the perfect beginning to your forever
             </p>
 
-            <div lassName=" w-full  gap-10 text-8xl font-bold text-center">
+            <div className=" animate-pulse ">
               <button onClick={()=> navigate("/login") } className="bg-[#F5E6C8] cursor-pointer text-[#6D4C3D] font-bold border-2 border-transparent px-8 py-3 m-2 hover:bg-[#E8D5B5] hover:text-[#4A3529] hover:border-[#D4AF37] transition-all duration-300  shadow-md hover:shadow-lg rounded-lg hover:scale-[1.02]">
                 Plan Your Special Day
               </button>
