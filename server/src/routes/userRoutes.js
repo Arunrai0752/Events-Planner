@@ -1,11 +1,16 @@
 import express from "express";
-import { GetProfile } from "../controllers/userController.js";
+import { GetProfile, UpdateProfile } from "../controllers/userController.js";
 import { Protect } from "../middlewares/authMiddleWare.js";
+import multer from "multer";
 
-
+const upload = multer();
 const router = express.Router();
 
+
+
+
 router.get("/profile", Protect, GetProfile);
+router.put("/update", Protect, upload.single("picture"), UpdateProfile);
 
 
 export default router;

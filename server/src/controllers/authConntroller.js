@@ -20,12 +20,18 @@ export const registerUser = async (req, res, next) => {
       return next(error);
     }
 
+
+    const profilePic = `https://placehold.co/600x400?text=${firstname
+      .charAt(0)
+      .toUpperCase()}${lastname.charAt(0).toUpperCase()}`;
+
     const newUser = await User.create({
       firstname,
       lastname,
       email,
       phonenumber,
       password: hashedpass,
+      photo: profilePic,
     });
     res.status(201).json({ message: "Registation Succecfull" });
   } catch (error) {
@@ -66,6 +72,6 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-export const logoutUser = (req, res) => {};
+export const logoutUser = (req, res) => { };
 
-export const updateUser = (req, res) => {};
+export const updateUser = (req, res) => { };

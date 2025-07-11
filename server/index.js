@@ -6,6 +6,8 @@ import connectDB from "./src/config/db.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter from "./src/routes/userRoutes.js"
+import cloudinary from "./src/config/cloudinary.js";
+
 
 dotenv.config();
 const app = express();
@@ -16,7 +18,7 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.use("/auth", AuthRouter);
-app.use("/user",userRouter)
+app.use("/user", userRouter)
 
 app.use((err, req, res, next) => {
   const errormessage = err.message || "Internal Server Error";
@@ -26,7 +28,19 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT || 2323;
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`Server Started at ${port}`);
-  connectDB();
+
+  try {
+    await connectDB();
+    await cloudinary.api.resources({ max_results: 1 })
+    console.log("cloudinary bhi Connected");
+
+
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+    
+
+  }
 });

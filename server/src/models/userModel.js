@@ -23,8 +23,28 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    photo: {
+      type: String,
+      required: true,
+      default: "",
+    },
+    gender: {
+      type: String,
+      enum: ["male", "female", "other", ""],
+      default: "other",
+    },
+    representing: {
+      type: String,
+      default: "",
+      enum: ["bride", "groom", "guest", "other", "N/A"],
+    },
+    occupaytion: {
+      type: String,
+      default: "",
+    }
   },
   { timestamps: true }
+
 );
 
 const User = mongoose.model("User", userSchema);

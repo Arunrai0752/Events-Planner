@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-import Hero from "./components/HomeHero";
 import Footer from "./components/Footer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
@@ -12,8 +11,9 @@ import Stories from "./pages/Stories";
 import Loginpage from "./pages/Loginpage";
 import Register from "./pages/Register";
 import {Toaster} from "react-hot-toast"
-import Usernav from "./components/Usernav";
 import UserDashboard from "./pages/UserDashboard";
+import EditUserDashboard from "./pages/EditUserDashboard";
+
 
 
 
@@ -21,7 +21,7 @@ const App = () => {
   return (
     <BrowserRouter>
     <Toaster/>
-      <Usernav />
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -32,6 +32,7 @@ const App = () => {
         <Route path="/login" element={<Loginpage/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/UserDashboard" element={<UserDashboard/>}/>
+        <Route path="/EditUserDashboard" element={<EditUserDashboard/>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>

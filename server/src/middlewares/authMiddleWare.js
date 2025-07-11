@@ -4,7 +4,7 @@ import User from "../models/userModel.js";
 export const Protect =  async (req, res, next) => {
   try {
     const token = req.cookies.IDCard || "";
-    console.log(token);
+  
 
     if (!token) {
       const error = new Error("Unauthorized !! Login Again");

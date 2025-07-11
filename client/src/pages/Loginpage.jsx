@@ -38,7 +38,7 @@ toast.error(`Error: ${error?.response?.message || ""} | ${error?.response?.data?
           onSubmit={Submitform}
         >
           <div className="bg-black/60 h-screen w-screen  flex justify-center  items-center">
-            <div className="h-[60%] w-[40%] bg-white/75 rounded-4xl  grid justify-center  ">
+            <div className="h-[65%] w-[40%] bg-white/75 rounded-4xl  grid justify-center  ">
               <div className="h-[60%] relative top-5  w-[100%]  grid items-center-safe">
                 <h1 className="text-center text-orange-900 text-3xl">Log In</h1>
 
