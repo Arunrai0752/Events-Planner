@@ -41,8 +41,25 @@ const userSchema = mongoose.Schema(
     occupaytion: {
       type: String,
       default: "",
-    }
+    },
+    address: {
+      type: String,
+      default: "",
+      required: true,
+    },
+
+    city: {
+      type: String,
+      default: "",
+      required: true,
+    },
+    state: {
+      type: String,
+      default: "",
+      required: true,
+    },
   },
+
   { timestamps: true }
 
 );

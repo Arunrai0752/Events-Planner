@@ -11,8 +11,8 @@ import Stories from "./pages/Stories";
 import Loginpage from "./pages/Loginpage";
 import Register from "./pages/Register";
 import {Toaster} from "react-hot-toast"
-import UserDashboard from "./pages/UserDashboard";
 import EditUserDashboard from "./pages/EditUserDashboard";
+import CustomerDashboard from "./pages/CustomerDashboard";
 
 
 
@@ -31,10 +31,10 @@ const App = () => {
         <Route path="/stories" element={<Stories />} />
         <Route path="/login" element={<Loginpage/>}/>
         <Route path="/register" element={<Register/>}/>
-        <Route path="/UserDashboard" element={<UserDashboard/>}/>
+        <Route path="/UserDashboard" element={<CustomerDashboard/>}/>
         <Route path="/EditUserDashboard" element={<EditUserDashboard/>}/>
       </Routes>
-      <Footer/>
+      {/* <Footer/> */}
     </BrowserRouter>
   );
 };
