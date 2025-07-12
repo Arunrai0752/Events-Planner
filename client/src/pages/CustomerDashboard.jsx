@@ -7,7 +7,7 @@ import Support from "../components/customer/Support";
 import Feedback from "../components/customer/feedback";
 
 const CustomerDashboard = () => {
-  const [active, setActive] = useState("overview");
+  const [active, setActive] = useState("profile");
   return (
     <>
       <div className="flex mt-20">

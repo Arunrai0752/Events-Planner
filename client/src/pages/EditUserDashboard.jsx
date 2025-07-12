@@ -5,6 +5,7 @@ import api from "../config/api.jsx";
 import toast from "react-hot-toast";
 import { data, useNavigate } from "react-router-dom";
 import UserDashboard from "./UserDashboard.jsx";
+import Profile from "../components/customer/Profile.jsx";
 
 const EditUserDashboard = () => {
   const navigate = useNavigate();
@@ -190,52 +191,7 @@ const EditUserDashboard = () => {
               </div>
             </div>
 
-            <div
-              className="bg-white p-6 
-            text-center rounded-xl shadow-sm"
-            >
-              <h3 className="text-lg font-medium text-gray-700 mb-4">
-                Account Details
-              </h3>
-              <div className="space-y-4">
-                <div>
-                  <p className="text-sm text-gray-500">Account Status</p>
-                  <p className="font-medium text-green-600">Active</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Last Update</p>
-                  <p className="font-medium">
-                    {userData?.createdAt
-                      ? userData.updatedAt.split("T")[0]
-                      : "Loading..."}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Account Type</p>
-                  <p className="font-medium">Premium Member</p>
-                </div>
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-gray-200">
-                <h3 className="text-lg font-medium text-gray-700 mb-4">
-                  Quick Actions
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  <button className="p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
-                    Change Password
-                  </button>
-                  <button className="p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
-                    Privacy Settings
-                  </button>
-                  <button className="p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
-                    Notification
-                  </button>
-                  <button className="p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
-                    Help Center
-                  </button>
-                </div>
-              </div>
-            </div>
+      
           </div>
         </div>
       </div>

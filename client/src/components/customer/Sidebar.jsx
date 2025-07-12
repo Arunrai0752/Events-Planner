@@ -11,7 +11,7 @@ import { FaAirbnb } from "react-icons/fa";
 
 const Sidebar = ({active, setActive}) => {
   return (
-    <div className="h-[90vh] border-black border-2 w-100 p-5 flex flex-col justify-between bg-indigo-500">
+    <div className="h-[90.5vh] border-black border-2 w-100 p-5 flex flex-col justify-between bg-indigo-500">
       <div>
         <div className="text-3xl border-b-2 p-5 text-center flex items-center justify-center gap-2">
           <FaAirbnb className="text-4xl text-rose-500" />
@@ -19,15 +19,7 @@ const Sidebar = ({active, setActive}) => {
         </div>
         <div className="p-10">
           <ul className="grid gap-4">
-            <li
-              className={`text-2xl  p-5  bg-blue-200 rounded-lg flex items-center gap-3 hover:bg-blue-500 cursor-pointer hover:text-white ${
-                active === "overview" && "bg-green-500 text-white"
-              }`}
-              onClick={() => setActive("overview")}
-            >
-              <FiHome className="text-2xl" />
-              <span>Overview</span>
-            </li>
+           
             <li
               className={`text-2xl  p-5  bg-blue-200 rounded-lg flex items-center gap-3 hover:bg-blue-500 cursor-pointer hover:text-white ${
                 active === "profile" && "bg-green-500 text-white"
@@ -36,6 +28,15 @@ const Sidebar = ({active, setActive}) => {
             >
               <FiUser className="text-2xl" />
               <span>Profile</span>
+            </li>
+             <li
+              className={`text-2xl  p-5  bg-blue-200 rounded-lg flex items-center gap-3 hover:bg-blue-500 cursor-pointer hover:text-white ${
+                active === "overview" && "bg-green-500 text-white"
+              }`}
+              onClick={() => setActive("overview")}
+            >
+              <FiHome className="text-2xl" />
+              <span>Overview</span>
             </li>
             <li
               className={`text-2xl  p-5  bg-blue-200 rounded-lg flex items-center gap-3 hover:bg-blue-500 cursor-pointer hover:text-white ${
