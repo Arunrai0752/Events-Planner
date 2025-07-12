@@ -31,31 +31,31 @@ const userSchema = mongoose.Schema(
     gender: {
       type: String,
       enum: ["male", "female", "other", ""],
-      default: "other",
+      default: "N/A",
     },
     representing: {
       type: String,
-      default: "",
+      default: "N/A",
       enum: ["bride", "groom", "guest", "other", "N/A"],
     },
-    occupaytion: {
+    occupation: {
       type: String,
-      default: "",
+      default: "N/A",
     },
     address: {
       type: String,
-      default: "",
+      default: "N/A",
       required: true,
     },
 
     city: {
       type: String,
-      default: "",
+      default: "N/A",
       required: true,
     },
     state: {
       type: String,
-      default: "",
+      default: "N/A",
       required: true,
     },
   },

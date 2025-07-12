@@ -10,10 +10,10 @@ const CustomerDashboard = () => {
   const [active, setActive] = useState("profile");
   return (
     <>
-      <div className="flex mt-20">
-        <Sidebar active={active} setActive={setActive} />
+      <div className="flex mt-20 w-screen ">
+        <Sidebar active={active} setActive={setActive}  />
 
-        <div className="border-2 w-full ">
+        <div className=" ">
           {active === "overview" && <Overview />}
           {active === "booking" && <Booking />}
           {active === "profile" && <Profile />}
