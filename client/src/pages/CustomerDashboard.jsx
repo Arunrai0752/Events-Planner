@@ -8,10 +8,11 @@ import Feedback from "../components/customer/feedback";
 
 const CustomerDashboard = () => {
   const [active, setActive] = useState("profile");
+ 
   return (
     <>
       <div className="flex mt-20 w-screen ">
-        <Sidebar active={active} setActive={setActive}  />
+        <Sidebar active={active} setActive={setActive} />
 
         <div className=" ">
           {active === "overview" && <Overview />}

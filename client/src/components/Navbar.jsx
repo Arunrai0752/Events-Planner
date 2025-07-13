@@ -9,28 +9,9 @@ import toast from "react-hot-toast";
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const [userData, setUserData] = useState({ 
-      firstname: "My",
-    });   
 
 
-  const fetchUserData = async () => {
-    try {
-      const res = await api.get("/user/profile");
-      setUserData(res.data.data);
-      toast.success(res.data.message);
-    } catch (error) {
-      toast.error(
-        `Error : ${error.response?.status || error.message} | ${
-          error.response?.data.message || ""
-        }`
-      );
-    }
-  };
-  
-    useEffect(() =>  {
-      fetchUserData(  );
-    }, [navigate]);
+ 
   
   return (
     <nav className="bg-white shadow-md w-full fixed top-0 z-50">
@@ -105,7 +86,7 @@ const Navbar = () => {
               <div className=" bg-[url(wednesday.jpg)] h-8 w-8 rounded-2xl bg-center bg-cover text-xl">
 
               </div>
-              <span className="font-medium"> {userData.firstname }'s Profile</span>
+              <span className="font-medium">My Profile</span>
             </button>
           </div>
         </div>
