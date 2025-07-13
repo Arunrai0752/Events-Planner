@@ -15,9 +15,11 @@ import {
 } from "react-icons/fa";
 
 import { useNavigate } from "react-router-dom";
+import EditProfile from "./EditProfile.jsx";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const [isEditModelOpen, setIsEditModelOpen] = useState(false)
   const [userData, setUserData] = useState({
     firstname: "DevXArun",
     lastname: "FSD",
@@ -30,11 +32,9 @@ const Profile = () => {
     try {
       const res = await api.get("/user/profile");
       setUserData(res.data.data);
-      toast.success(res.data.message);
     } catch (error) {
       toast.error(
-        `Error : ${error.response?.status || error.message} | ${
-          error.response?.data.message || ""
+        `Error : ${error.response?.status || error.message} | ${error.response?.data.message || ""
         }`
       );
     }
@@ -42,7 +42,7 @@ const Profile = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [setIsEditModelOpen ]);
 
   return (
     <main className="bg-gradient-to-r from-red-200 flex justify-evenly items-center  w-[75vw] to-indigo-200 min-h-[90.7vh] absolute right-0 ">
@@ -66,7 +66,7 @@ const Profile = () => {
           <p className="text-gray-500 mt-1">Member since 2025</p>
           <button
             className=" px-6 py-2 mt-2  bg-yellow-500 text-white rounded-lg hover:bg-red-700 transition-colors"
-            onClick={() => navigate("/EditUserDashboard")}
+            onClick={() => { setIsEditModelOpen(true) }}
           >
             Edit Profile
           </button>
@@ -178,6 +178,12 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      <EditProfile
+        isOpen={isEditModelOpen}
+        onClose={() => setIsEditModelOpen(false)}
+        oldData={userData}
+      />
     </main>
   );
 };

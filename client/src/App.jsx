@@ -30,7 +30,7 @@ const App = () => {
         <Route path="/stories" element={<Stories />} />
         <Route path="/login" element={<Loginpage/>}/>
         <Route path="/register" element={<Register/>}/>
-        <Route path="/UserDashboard" element={<CustomerDashboard/>}/>
+        <Route path="/CustomerDashboard" element={<CustomerDashboard/>}/>
       </Routes>
       {/* <Footer/> */}
     </BrowserRouter>

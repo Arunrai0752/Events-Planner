@@ -14,7 +14,7 @@ const Navbar = () => {
  
   
   return (
-    <nav className="bg-white shadow-md w-full fixed top-0 z-50">
+    <nav className=" bg-gradient-to-tl from-green-300 to-blue-300 shadow-md w-full fixed top-0 z-50">
       <div className="max-w-7xl mx-auto  sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           
@@ -80,7 +80,7 @@ const Navbar = () => {
 
           <div className="ml-4 flex items-center md:ml-6">
             <button 
-              onClick={() => navigate("/UserDashboard")}
+              onClick={() => navigate("/CustomerDashboard")}
               className="flex items-center space-x-2 bg-gradient-to-r from-rose-500 to-amber-400 text-white px-4 py-2 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-1000"
             >
               <div className=" bg-[url(wednesday.jpg)] h-8 w-8 rounded-2xl bg-center bg-cover text-xl">

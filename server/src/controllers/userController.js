@@ -30,10 +30,6 @@ export const UpdateProfile = async (req, res, next,) => {
     const { firstname, lastname, phonenumber } = req.body;
 
 
-    console.log(firstname);
-    console.log(phonenumber);
-    console.log(lastname);
-
 
     if (!currentUser) {
       const error = new Error("User Not Found !! Login Again");

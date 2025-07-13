@@ -58,6 +58,11 @@ const userSchema = mongoose.Schema(
       default: "N/A",
       required: true,
     },
+    district: {
+      type: String,
+      default: "N/A",
+      required: true,
+    },
   },
 
   { timestamps: true }
