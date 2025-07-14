@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import gentoken from "../utils/auth.js";
+import Deactivation from "../models/deactivationModel.js";
 
 export const registerUser = async (req, res, next) => {
   try {
@@ -72,6 +73,50 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-export const logoutUser = (req, res) => { };
+export const Deactivateuser = async (req, res, next,) => {
 
-export const updateUser = (req, res) => { };
+  try {
+    const currentUser = req.user;
+    const {password, reason ,feedback } = req.body;
+
+    if(!currentUser){
+      const error = new Error("USer NOt Found Login Again")
+      error.statusCode = 401;
+      return next(error);
+    }
+
+        const updatedUser = await User.findByIdAndUpdate(
+      currentUser._id,
+      {
+        gender: "N/A",
+        occupation: "N/A",
+        address: "N/A",
+        city: "N/A",
+        state: "N/A",
+        district: "N/A",
+        representing: "N/A",
+        photo: "N/A",
+        role: "N/A",
+        password:"N/A",
+        status: "Inactive",
+      },
+      { new: true }
+    );
+
+    LogoutUser();
+    await Deactivation.create({ userId: currentUser._id, reason, feedback });
+ res.status(200).json({ message: "Sorry to see you go . . ." });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export const LogoutUser = (req, res, next) => {
+  try {
+    res.cookie("IDCard", "", { maxAge: 0 });
+    res.status(200).json({ message: "Logout Successfull" });
+  } catch (error) {
+    next(error);
+  }
+};

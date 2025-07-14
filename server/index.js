@@ -1,6 +1,6 @@
 import express from "express";
 import morgan from "morgan";
-import AuthRouter from "./src/routes/AuthRouter.js";
+import AuthRouter from "./src/routes/authRouter.js";
 import dotenv from "dotenv";
 import connectDB from "./src/config/db.js";
 import cors from "cors";

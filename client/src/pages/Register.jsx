@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../config/api.jsx";
-import {toast}  from "react-hot-toast";
+import { toast } from "react-hot-toast";
 const Register = () => {
   const [registerData, setRegisterData] = useState({
     firstname: "",
@@ -22,22 +22,29 @@ const Register = () => {
     e.preventDefault();
     console.log(registerData);
 
-    try {
-      const res = await api.post("/auth/register",registerData);
-      toast.success(res.data.message)
-       setRegisterData({
-      firstname: "",
-      lastname: "",
-      phonenumber: "",
-      email: "",
-      password: "",
-      cpassword: "",
-    });
-    } catch (error) {
-      toast.error(`Error : , ${error.response.message}`);
+    if (registerData.password !== registerData.cpassword) {
+      toast.error("Passwords do not match.");
+      return;
     }
 
-   
+
+    try {
+      const res = await api.post("/auth/register", registerData);
+      toast.success(res.data.message)
+      setRegisterData({
+        firstname: "",
+        lastname: "",
+        phonenumber: "",
+        email: "",
+        password: "",
+        cpassword: "",
+      });
+    } catch (error) {
+      toast.error(`Error : , ${error.response.data.message
+        }`);
+    }
+
+
   };
 
   return (
@@ -121,6 +128,8 @@ const Register = () => {
                     className="h-fit w-full p-2 outline-0  "
                     placeholder="Re-Enter Your Password"
                     name="cpassword"
+                    value={registerData.cpassword}
+
                     onChange={handleChange}
                     required
                   />

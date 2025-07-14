@@ -1,109 +1,176 @@
 import React, { useState } from 'react';
 import { RxCross2 } from "react-icons/rx";
+import api from '../../config/api';
 
 const Deactivate = ({ isOpen1, onClose1, onDeactivate }) => {
-    const [password, setPassword] = useState("");
-    const [reason, setReason] = useState("");
-    const [feedback, setFeedback] = useState("");
+    const [deactivationData, setDeactivationData] = useState({
+        password: "",
+        reason: "",
+        feedback: ""
+    });
+
+    const [deactiveConfirm, setDeactiveConfirm] = useState(false);
 
     if (!isOpen1) return null;
 
-    const handleDeactivate = () => {
-        if (!password || !reason) {
-            alert("Please fill all required fields.");
+
+    const handleInputChange = (e) => {
+        const { name, value, type, checked } = e.target;
+
+        if (type === "checkbox") {
+            setDeactiveConfirm(checked);
+        } else {
+            setDeactivationData({
+                ...deactivationData,
+                [name]: value
+            });
+        }
+    };
+
+
+    const handleDeactivate = async (e) => {
+        e.preventDefault();
+        if (!deactiveConfirm) {
+            alert("Please confirm to deactivate your account.");
             return;
         }
 
-        // Pass collected data to parent
-        onDeactivate({ password, reason, feedback });
+        const { password, reason, feedback } = deactivationData;
 
-        // Optionally clear fields
-        setPassword("");
-        setReason("");
-        setFeedback("");
+        if (!password) {
+            alert("Please enter your password.");
+            return;
+        }
+
+        if (!reason) {
+            alert("Please provide a reason for deactivation.");
+            return;
+        }
+
+        try {
+            const res = await api.put("/user/deactivate", {
+                password,
+                reason,
+                feedback
+            });
+
+            console.log("Deactivation success:", res.data);
+
+            if (onDeactivate) {
+                onDeactivate(deactivationData);
+            }
+
+            // Reset form
+            setDeactivationData({
+                password: "",
+                reason: "",
+                feedback: ""
+            });
+            setDeactiveConfirm(false);
+
+            // Optional: Close modal
+            onClose1();
+
+        } catch (error) {
+            console.error("Deactivation failed:", error);
+            alert("Something went wrong. Please try again.");
+        }
     };
 
     return (
-        <div className='inset-0 bg-black/40 backdrop-blur-sm fixed flex justify-center items-center z-50'>
-            <div className='h-[80vh] w-[60vw] bg-white rounded-lg shadow-lg flex flex-col'>
-
+        <div className='inset-0 bg-black/40 backdrop-blur-sm fixed flex justify-center items-center z-50 overflow-auto'>
+            <div className='h-[80vh] w-[60vw] bg-white rounded-lg shadow-lg flex flex-col overflow-y-auto'>
+                {/* Header */}
                 <div className='px-6 py-4 border-b'>
                     <div className='flex justify-between items-center'>
                         <h1 className='text-2xl font-semibold text-red-600'>Deactivate Account</h1>
                         <button onClick={onClose1} className='text-3xl'><RxCross2 /></button>
                     </div>
                 </div>
-
-                {/* Warning */}
-                <div className='p-6'>
-                    <div className='border p-4 rounded-lg bg-red-50 border-red-600'>
-                        <h2 className='text-lg font-medium mb-2 text-red-500'>Warning:</h2>
-                        <p className='text-red-500'>
-                            Temporarily deactivating your account will make your profile and activity invisible to other users.
-                            You can reactivate your account at any time by logging back in.
-                        </p>
+                <form onSubmit={handleDeactivate} className='flex flex-col flex-grow'>
+                    {/* Warning */}
+                    <div className='p-6'>
+                        <div className='border p-4 rounded-lg bg-red-50 border-red-600'>
+                            <h2 className='text-lg font-medium mb-2 text-red-500'>Warning:</h2>
+                            <label className="flex items-start gap-2 cursor-pointer text-red-500">
+                                <input
+                                    type="checkbox"
+                                    checked={deactiveConfirm}
+                                    name="deactiveConfirm"
+                                    onChange={handleInputChange}
+                                    className="mt-1"
+                                />
+                                <span>
+                                    Temporarily deactivating your account will make your profile and activity invisible to other users. <br />
+                                    You can reactivate your account at any time by logging back in.
+                                </span>
+                            </label>
+                        </div>
                     </div>
-                </div>
-
-                {/* Input Fields */}
-                <div className='px-6 flex flex-col gap-4 flex-grow'>
-
-                    <div>
-                        <label className='block text-sm font-medium text-gray-700'>Reason for Deactivation <span className='text-red-500'>*</span></label>
-                        <select
-                            value={reason}
-                            onChange={(e) => setReason(e.target.value)}
-                            className='w-full mt-1 p-2 border rounded focus:ring-2 focus:ring-red-300'
+                    {/* Input Fields */}
+                    <div className='px-6 flex flex-col gap-4 flex-grow'>
+                        {/* Reason */}
+                        <div>
+                            <label className='block text-sm font-medium text-gray-700'>Reason for Deactivation <span className='text-red-500'>*</span></label>
+                            <select
+                                value={deactivationData.reason}
+                                name="reason"
+                                onChange={handleInputChange}
+                                className='w-full mt-1 p-2 border rounded focus:ring-2 focus:ring-red-300'
+                            >
+                                <option value="">Select a reason</option>
+                                <option value="Privacy Concerns">Privacy Concerns</option>
+                                <option value="Not Satisfied with the Platform">Not Satisfied with the Platform</option>
+                                <option value="Taking a Break">Taking a Break</option>
+                                <option value="Found What I Was Looking For">Found What I Was Looking For</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        {/* Feedback */}
+                        <div>
+                            <label className='block text-sm font-medium text-gray-700'>Additional Feedback (Optional)</label>
+                            <textarea
+                                value={deactivationData.feedback}
+                                onChange={handleInputChange}
+                                name="feedback"
+                                rows={3}
+                                placeholder="Let us know how we can improve..."
+                                className='w-full mt-1 p-2 border rounded focus:ring-2 focus:ring-red-300 resize-none'
+                            />
+                        </div>
+                        {/* Password */}
+                        <div>
+                            <label htmlFor="Confirm-Password" className='text-sm font-medium text-gray-700'>
+                                Confirm Password <span className='text-red-500'>*</span>
+                            </label>
+                            <input
+                                type="password"
+                                value={deactivationData.password}
+                                name="password"
+                                onChange={handleInputChange}
+                                className='w-full mt-1 p-2 border rounded focus:ring-2 focus:ring-red-300'
+                                placeholder="Enter your password to confirm"
+                                autoComplete="current-password"
+                            />
+                        </div>
+                    </div>
+                    {/* Footer Buttons */}
+                    <div className='flex justify-end gap-3 px-6 py-4 border-t'>
+                        <button
+                            type="button"
+                            onClick={onClose1}
+                            className='px-4 py-2 bg-gray-200 rounded hover:bg-gray-300'
                         >
-                            <option value="">Select a reason</option>
-                            <option value="Privacy Concerns">Privacy Concerns</option>
-                            <option value="Not Satisfied with the Platform">Not Satisfied with the Platform</option>
-                            <option value="Taking a Break">Taking a Break</option>
-                            <option value="Found What I Was Looking For">Found What I Was Looking For</option>
-                            <option value="Other">Other</option>
-                        </select>
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className='px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600'
+                        >
+                            Yes, Deactivate
+                        </button>
                     </div>
-
-                    <div>
-                        <label className='block text-sm font-medium text-gray-700'>Additional Feedback (Optional)</label>
-                        <textarea
-                            value={feedback}
-                            onChange={(e) => setFeedback(e.target.value)}
-                            rows={3}
-                            placeholder="Let us know how we can improve..."
-                            className='w-full mt-1 p-2 border rounded focus:ring-2 focus:ring-red-300 resize-none'
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="Confirm-Password" className='text-sm font-medium text-gray-700'>
-                            Confirm Password <span className='text-red-500'>*</span>
-                        </label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className='w-full mt-1 p-2 border rounded focus:ring-2 focus:ring-red-300'
-                            placeholder="Enter your password to confirm"
-                        />
-                    </div>
-                </div>
-
-                {/* Footer Buttons */}
-                <div className='flex justify-end gap-3 px-6 py-4 border-t'>
-                    <button
-                        onClick={onClose1}
-                        className='px-4 py-2 bg-gray-200 rounded hover:bg-gray-300'
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        onClick={handleDeactivate}
-                        className='px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600'
-                    >
-                        Yes, Deactivate
-                    </button>
-                </div>
+                </form>
             </div>
         </div>
     );

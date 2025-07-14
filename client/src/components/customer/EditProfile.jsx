@@ -632,9 +632,14 @@ const EditProfile = ({ isOpen, onClose, oldData }) => {
                         <button className='px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors' onClick={() => setIsDeactivateModleOpen(true)}>
                             Deactivate Account
                         </button>
-                        <button className='px-6 py-2 bg-blue-500 animate-bounce text-white rounded-lg hover:bg-blue-600 transition-colors' onClick={handleSaveData}>
-                            Save Changes
+                        <button
+                            className='px-6 py-2 bg-blue-500  text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50'
+                            onClick={handleSaveData}
+                            disabled={loading}
+                        >
+                            {loading ? "Saving..." : "Save Changes"}
                         </button>
+
                     </div>
                 </div>
 
@@ -643,10 +648,6 @@ const EditProfile = ({ isOpen, onClose, oldData }) => {
                     onClose1={() => setIsDeactivateModleOpen(false)}
                     onDeactivate={({ password, reason, feedback }) => {
                         console.log("Deactivating with:", password, reason, feedback);
-                        // Call API here with the collected data
-                        // Example:
-                        // await api.post("/user/deactivate", { password, reason, feedback });
-
                         toast.success("Account deactivated successfully.");
                         setIsDeactivateModleOpen(false);
                     }}

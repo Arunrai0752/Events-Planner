@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../config/api.jsx";
 import {toast} from "react-hot-toast"
+import Profile from "../components/customer/Profile.jsx";
+
 
 const Loginpage = () => {
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ const Loginpage = () => {
       toast.success(res.data.message);
       setEmail("");
       setPassword("");
-      navigate('/UserDashboard')
+      navigate("/")
     } catch (error) {
 toast.error(`Error: ${error?.response?.message || ""} | ${error?.response?.data?.message || "Something went wrong"}`);
     }
