@@ -27,7 +27,13 @@ export const UpdateProfile = async (req, res, next,) => {
 
   try {
     const currentUser = req.user;
-    const { firstname, lastname, phonenumber } = req.body;
+    const { firstname, lastname, phonenumber, gender,
+      occupation,
+      address,
+      city,
+      state,
+      district,
+      representing, } = req.body;
 
 
 
@@ -57,13 +63,20 @@ export const UpdateProfile = async (req, res, next,) => {
       })
       picture = result.secure_url
 
-      
+
       const updatedUser = await User.findByIdAndUpdate(currentUser._id, {
         firstname,
         lastname,
         phonenumber,
-
         photo: picture || currentUser.photo,
+        gender,
+        occupation,
+        address,
+        city,
+        state,
+        district,
+        representing,
+
       }, { new: true })
 
       res.status(200).json({ message: "Updated Successfully", data: updatedUser });
@@ -74,7 +87,19 @@ export const UpdateProfile = async (req, res, next,) => {
 
     const updatedUser = await User.findByIdAndUpdate(
       currentUser._id,
-      { firstname, lastname, phonenumber },
+      {
+        firstname,
+        lastname,
+        phonenumber,
+        photo: picture || currentUser.photo,
+        gender,
+        occupation,
+        address,
+        city,
+        state,
+        district,
+        representing
+      },
       { new: true }
     );
     res.status(200).json({ message: "Updated Successfully", data: updatedUser, });

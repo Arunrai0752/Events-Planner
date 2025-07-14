@@ -3,6 +3,7 @@ import api from '../../config/api'
 import { RxCross1 } from "react-icons/rx";
 import { IoCameraOutline } from "react-icons/io5";
 import toast from 'react-hot-toast';
+import Deactivate from './Deactivate.jsx';
 
 
 
@@ -37,10 +38,279 @@ const indianStates = [
     "West Bengal",
 ];
 
+
+const Districts = {
+    "Andhra Pradesh": [
+        "Anantapur",
+        "Chittoor",
+        "East Godavari",
+        "Guntur",
+        "Krishna",
+        "Kurnool",
+        "Nellore",
+        "Prakasam",
+        "Srikakulam",
+        "Visakhapatnam",
+        "Vizianagaram",
+        "West Godavari",
+        "YSR Kadapa"
+    ],
+    "Uttar Pradesh": [
+        "Agra",
+        "Aligarh",
+        "Allahabad",
+        "Ambedkar Nagar",
+        "Amethi",
+        "Amroha",
+        "Auraiya",
+        "Ayodhya",
+        "Azamgarh",
+        "Baghpat",
+        "Bahraich",
+        "Ballia",
+        "Balrampur",
+        "Banda",
+        "Barabanki",
+        "Bareilly",
+        "Basti",
+        "Bhadohi",
+        "Bijnor",
+        "Budaun",
+        "Bulandshahr",
+        "Chandauli",
+        "Chitrakoot",
+        "Deoria",
+        "Etah",
+        "Etawah",
+        "Farrukhabad",
+        "Fatehpur",
+        "Firozabad",
+        "Gautam Buddha Nagar",
+        "Ghaziabad",
+        "Ghazipur",
+        "Gonda",
+        "Gorakhpur",
+        "Hamirpur",
+        "Hapur",
+        "Hardoi",
+        "Hathras",
+        "Jalaun",
+        "Jaunpur",
+        "Jhansi",
+        "Kannauj",
+        "Kanpur Dehat",
+        "Kanpur Nagar",
+        "Kasganj",
+        "Kaushambi",
+        "Kheri",
+        "Kushinagar",
+        "Lalitpur",
+        "Lucknow",
+        "Maharajganj",
+        "Mahoba",
+        "Mainpuri",
+        "Mathura",
+        "Mau",
+        "Meerut",
+        "Mirzapur",
+        "Moradabad",
+        "Muzaffarnagar",
+        "Pilibhit",
+        "Pratapgarh",
+        "Raebareli",
+        "Rampur",
+        "Saharanpur",
+        "Sambhal",
+        "Sant Kabir Nagar",
+        "Shahjahanpur",
+        "Shamli",
+        "Shravasti",
+        "Siddharthnagar",
+        "Sitapur",
+        "Sonbhadra",
+        "Sultanpur",
+        "Unnao",
+        "Varanasi"
+    ],
+    "Maharashtra": [
+        "Ahmednagar",
+        "Akola",
+        "Amravati",
+        "Aurangabad",
+        "Beed",
+        "Bhandara",
+        "Buldhana",
+        "Chandrapur",
+        "Dhule",
+        "Gadchiroli",
+        "Gondia",
+        "Hingoli",
+        "Jalgaon",
+        "Jalna",
+        "Kolhapur",
+        "Latur",
+        "Mumbai City",
+        "Mumbai Suburban",
+        "Nagpur",
+        "Nanded",
+        "Nandurbar",
+        "Nashik",
+        "Osmanabad",
+        "Palghar",
+        "Parbhani",
+        "Pune",
+        "Raigad",
+        "Ratnagiri",
+        "Sangli",
+        "Satara",
+        "Sindhudurg",
+        "Solapur",
+        "Thane",
+        "Wardha",
+        "Washim",
+        "Yavatmal"
+    ],
+    "West Bengal": [
+        "Alipurduar",
+        "Bankura",
+        "Birbhum",
+        "Cooch Behar",
+        "Dakshin Dinajpur",
+        "Darjeeling",
+        "Hooghly",
+        "Howrah",
+        "Jalpaiguri",
+        "Jhargram",
+        "Kalimpong",
+        "Kolkata",
+        "Malda",
+        "Murshidabad",
+        "Nadia",
+        "North 24 Parganas",
+        "Paschim Bardhaman",
+        "Paschim Medinipur",
+        "Purba Bardhaman",
+        "Purba Medinipur",
+        "Purulia",
+        "South 24 Parganas",
+        "Uttar Dinajpur"
+    ], "Madhya Pradesh": [
+        "Agar Malwa",
+        "Alirajpur",
+        "Anuppur",
+        "Ashoknagar",
+        "Balaghat",
+        "Barwani",
+        "Betul",
+        "Bhind",
+        "Bhopal",
+        "Burhanpur",
+        "Chhatarpur",
+        "Chhindwara",
+        "Damoh",
+        "Datia",
+        "Dewas",
+        "Dhar",
+        "Dindori",
+        "Guna",
+        "Gwalior",
+        "Harda",
+        "Hoshangabad",
+        "Indore",
+        "Jabalpur",
+        "Jhabua",
+        "Katni",
+        "Khandwa",
+        "Khargone",
+        "Mandla",
+        "Mandsaur",
+        "Morena",
+        "Narsinghpur",
+        "Neemuch",
+        "Panna",
+        "Raisen",
+        "Rajgarh",
+        "Ratlam",
+        "Rewa",
+        "Sagar",
+        "Satna",
+        "Sehore",
+        "Seoni",
+        "Shahdol",
+        "Shajapur",
+        "Sheopur",
+        "Shivpuri",
+        "Sidhi",
+        "Singrauli",
+        "Tikamgarh",
+        "Ujjain",
+        "Umaria",
+        "Vidisha"
+    ]
+}
+
+
+const City = [
+    "Indore",
+    "Bhopal",
+    "Jabalpur",
+    "Gwalior",
+    "Ujjain",
+    "Sagar",
+    "Ratlam",
+    "Rewa",
+    "Satna",
+    "Murwara (Katni)",
+    "Singrauli",
+    "Burhanpur",
+    "Khandwa",
+    "Chhindwara",
+    "Vidisha",
+    "Mandsaur",
+    "Neemuch",
+    "Hoshangabad",
+    "Itarsi",
+    "Sehore",
+    "Betul",
+    "Shivpuri",
+    "Guna",
+    "Dewas",
+    "Dhar",
+    "Mandla",
+    "Balaghat",
+    "Morena",
+    "Bhind",
+    "Sheopur",
+    "Datia",
+    "Tikamgarh",
+    "Chhatarpur",
+    "Panna",
+    "Damoh",
+    "Narsinghpur",
+    "Seoni",
+    "Harda",
+    "Alirajpur",
+    "Barwani",
+    "Khargone",
+    "Badwani",
+    "Jhabua",
+    "Rajgarh",
+    "Shajapur",
+    "Agar Malwa",
+    "Umaria",
+    "Anuppur",
+    "Ashoknagar",
+    "Shahdol",
+    "Sidhi",
+    "Singrauli"
+]
+
 const EditProfile = ({ isOpen, onClose, oldData }) => {
     const [preview, setPreview] = useState("");
     const [picture, setPicture] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isDeactivateModleOpen, setIsDeactivateModleOpen] = useState(false)
+
     const [userdata, setUserData] = useState({
         firstname: "",
         lastname: "",
@@ -106,12 +376,12 @@ const EditProfile = ({ isOpen, onClose, oldData }) => {
             setLoading(false);
         }
     };
-
     useEffect(() => {
-        if (oldData) {
+        if (oldData && isOpen) {
             setUserData(oldData);
+            setPreview(oldData.photo || "");
         }
-    }, [isOpen , oldData ,  ]);
+    }, [isOpen, oldData]);
 
 
     if (!isOpen) return null;
@@ -228,15 +498,35 @@ const EditProfile = ({ isOpen, onClose, oldData }) => {
                                 <label htmlFor="occupation" className="text-gray-700 text-sm font-medium">
                                     Occupation
                                 </label>
-                                <input
-                                    type="text"
-                                    id="occupation"
+                                <select
                                     name="occupation"
                                     value={userdata.occupation}
                                     onChange={handelChange}
-                                    placeholder="Enter your occupation"
                                     className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all"
-                                />
+                                >
+                                    <option value="">Select Occupation</option>
+                                    <option value="Student">Student</option>
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Engineer">Engineer</option>
+                                    <option value="Doctor">Doctor</option>
+                                    <option value="Lawyer">Lawyer</option>
+                                    <option value="Business Owner">Business Owner</option>
+                                    <option value="Government Employee">Government Employee</option>
+                                    <option value="Private Sector Employee">Private Sector Employee</option>
+                                    <option value="Farmer">Farmer</option>
+                                    <option value="Homemaker">Homemaker</option>
+                                    <option value="Retired">Retired</option>
+                                    <option value="Freelancer">Freelancer</option>
+                                    <option value="Artist">Artist</option>
+                                    <option value="Actor">Actor</option>
+                                    <option value="Police">Police</option>
+                                    <option value="Army">Army</option>
+                                    <option value="Driver">Driver</option>
+                                    <option value="Plumber">Plumber</option>
+                                    <option value="Electrician">Electrician</option>
+                                    <option value="Other">Other</option>
+                                </select>
+
                             </div>
 
 
@@ -266,7 +556,7 @@ const EditProfile = ({ isOpen, onClose, oldData }) => {
                                 >
                                     <option value="N/A">N/A</option>
                                     {indianStates ? (indianStates.map((State, index) => (
-                                        <option value="State" key={index}>{indianStates[index]}</option>
+                                        <option value={State} key={index}>{State}</option>
                                     ))) : "N/A"}
 
 
@@ -287,9 +577,14 @@ const EditProfile = ({ isOpen, onClose, oldData }) => {
                                     className="p-2 border rounded-lg outline-none border-blue-300 w-full"
                                 >
                                     <option value="N/A">N/A</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
+
+                                    {Districts && Districts[userdata.state]
+                                        ? Districts[userdata.state].map((dist, index) => (
+                                            <option value={dist} key={index}>{dist}</option>
+                                        ))
+                                        : "N/A"
+                                    }
+
                                 </select>
                             </div>
 
@@ -302,9 +597,9 @@ const EditProfile = ({ isOpen, onClose, oldData }) => {
                                     className="p-2 border rounded-lg outline-none border-blue-300 w-full"
                                 >
                                     <option value="N/A">N/A</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
+                                    {City && City.map((Cities, index) => (
+                                        <option value={Cities} key={index}>{Cities}</option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -321,8 +616,6 @@ const EditProfile = ({ isOpen, onClose, oldData }) => {
                             </div>
 
 
-
-
                         </div>
                     </div>
 
@@ -335,8 +628,8 @@ const EditProfile = ({ isOpen, onClose, oldData }) => {
                 <div className='flex  items-center p-4 border-t border-gray-200 mt-4'>
 
 
-                    <div className='flex gap-4'>
-                        <button className='px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors'>
+                    <div className='flex justify-between items-center  w-full'>
+                        <button className='px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors' onClick={() => setIsDeactivateModleOpen(true)}>
                             Deactivate Account
                         </button>
                         <button className='px-6 py-2 bg-blue-500 animate-bounce text-white rounded-lg hover:bg-blue-600 transition-colors' onClick={handleSaveData}>
@@ -344,6 +637,20 @@ const EditProfile = ({ isOpen, onClose, oldData }) => {
                         </button>
                     </div>
                 </div>
+
+                <Deactivate
+                    isOpen1={isDeactivateModleOpen}
+                    onClose1={() => setIsDeactivateModleOpen(false)}
+                    onDeactivate={({ password, reason, feedback }) => {
+                        console.log("Deactivating with:", password, reason, feedback);
+                        // Call API here with the collected data
+                        // Example:
+                        // await api.post("/user/deactivate", { password, reason, feedback });
+
+                        toast.success("Account deactivated successfully.");
+                        setIsDeactivateModleOpen(false);
+                    }}
+                />
 
 
 

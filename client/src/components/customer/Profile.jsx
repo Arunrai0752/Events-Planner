@@ -20,6 +20,7 @@ import EditProfile from "./EditProfile.jsx";
 const Profile = () => {
   const navigate = useNavigate();
   const [isEditModelOpen, setIsEditModelOpen] = useState(false)
+
   const [userData, setUserData] = useState({
     firstname: "DevXArun",
     lastname: "FSD",
@@ -42,7 +43,7 @@ const Profile = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, [setIsEditModelOpen ]);
+  }, [isEditModelOpen ]);
 
   return (
     <main className="bg-gradient-to-r from-red-200 flex justify-evenly items-center  w-[75vw] to-indigo-200 min-h-[90.7vh] absolute right-0 ">
@@ -103,78 +104,126 @@ const Profile = () => {
             Additional information
           </div>
 
-          <div className="flex flex-col gap-10 justify-between py-10 items-center">
-            {/* Gender */}
-            <div className="flex items-center mb-2">
-              <div className="bg-green-100 p-3 rounded-full mr-4">
-                {userData.gender === "male" ? (
-                  <FaMars className="text-green-600 text-xl" />
-                ) : userData.gender === "female" ? (
-                  <FaVenus className="text-green-600 text-xl" />
-                ) : (
-                  <FaTransgender className="text-green-600 text-xl" />
-                )}
+          <div className="flex   justify-center  py-10 items-center">
+
+
+
+
+
+            <div className="grid gap-10">
+              <div className="flex">
+
+                <div className="bg-green-100 p-3 rounded-full mr-4">
+                  {userData.gender === "male" ? (
+                    <FaMars className="text-green-600 text-xl" />
+                  ) : userData.gender === "female" ? (
+                    <FaVenus className="text-green-600 text-xl" />
+                  ) : (
+                    <FaTransgender className="text-green-600 text-xl" />
+                  )}
+                </div>
+                <h3 className="text-lg font-medium text-gray-700 w-32">Gender</h3>
+
               </div>
-              <h3 className="text-lg font-medium text-gray-700 w-32">Gender</h3>
-              <p className="text-gray-600 pl-8 capitalize">
-                {userData.gender || "N/A"}
-              </p>
+
+
+              <div className="flex">
+
+                <div className="bg-green-100 p-3 rounded-full mr-4">
+                  <FaBriefcase className="text-green-600 text-xl" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-700 w-32">
+                  Occupation
+                </h3>
+
+              </div>
+
+
+              <div className="flex">
+
+                <div className="bg-green-100 p-3 rounded-full mr-4">
+                  <FaHome className="text-green-600 text-xl" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-700 w-32">
+                  Address
+                </h3>
+
+
+
+              </div>
+
+              <div className="flex">
+
+                <div className="bg-green-100 p-3 rounded-full mr-4">
+                  <FaMapMarkerAlt className="text-green-600 text-xl" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-700 w-32">City</h3>
+
+              </div>
+
+              <div className="flex">
+
+                <div className="bg-green-100 p-3 rounded-full mr-4">
+                  <FaFlag className="text-green-600 text-xl" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-700 w-32">State</h3>
+
+
+              </div>
+
+              <div className="flex">
+
+                <div className="bg-green-100 p-3 rounded-full mr-4">
+                  <FaUserTie className="text-green-600 text-xl" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-700 w-32">
+                  Representing
+                </h3>
+
+
+              </div>
             </div>
 
-            {/* Occupation */}
-            <div className="flex items-center mb-2">
-              <div className="bg-green-100 p-3 rounded-full mr-4">
-                <FaBriefcase className="text-green-600 text-xl" />
+
+            <div className="grid gap-10">
+              <div className="flex items-center mb-2">
+
+                <p className="text-gray-600 pl-8 capitalize">
+                  {userData.gender || "N/A"}
+                </p>
               </div>
-              <h3 className="text-lg font-medium text-gray-700 w-32">
-                Occupation
-              </h3>
-              <p className="text-gray-600 pl-8">
-                {userData.occupation || "N/A"}
-              </p>
+
+              <div className="flex items-center mb-2">
+
+                <p className="text-gray-600 pl-8">
+                  {userData.occupation || "N/A"}
+                </p>
+              </div>
+
+              <div className="flex items-center mb-2">
+
+                <p className="text-gray-600 pl-8">{userData.address || "N/A"}</p>
+              </div>
+
+              <div className="flex items-center mb-2">
+
+                <p className="text-gray-600 pl-8">{userData.city || "N/A"}</p>
+              </div>
+
+              <div className="flex items-center mb-2">
+
+                <p className="text-gray-600 pl-8">{userData.state || "N/A"}</p>
+              </div>
+
+              <div className="flex items-center mb-2">
+
+                <p className="text-gray-600 pl-8 capitalize">
+                  {userData.representing || "N/A"}
+                </p>
+              </div>
             </div>
 
-            {/* Address */}
-            <div className="flex items-center mb-2">
-              <div className="bg-green-100 p-3 rounded-full mr-4">
-                <FaHome className="text-green-600 text-xl" />
-              </div>
-              <h3 className="text-lg font-medium text-gray-700 w-32">
-                Address
-              </h3>
-              <p className="text-gray-600 pl-8">{userData.address || "N/A"}</p>
-            </div>
 
-            {/* City */}
-            <div className="flex items-center mb-2">
-              <div className="bg-green-100 p-3 rounded-full mr-4">
-                <FaMapMarkerAlt className="text-green-600 text-xl" />
-              </div>
-              <h3 className="text-lg font-medium text-gray-700 w-32">City</h3>
-              <p className="text-gray-600 pl-8">{userData.city || "N/A"}</p>
-            </div>
-
-            {/* State */}
-            <div className="flex items-center mb-2">
-              <div className="bg-green-100 p-3 rounded-full mr-4">
-                <FaFlag className="text-green-600 text-xl" />
-              </div>
-              <h3 className="text-lg font-medium text-gray-700 w-32">State</h3>
-              <p className="text-gray-600 pl-8">{userData.state || "N/A"}</p>
-            </div>
-
-            {/* Representing */}
-            <div className="flex items-center mb-2">
-              <div className="bg-green-100 p-3 rounded-full mr-4">
-                <FaUserTie className="text-green-600 text-xl" />
-              </div>
-              <h3 className="text-lg font-medium text-gray-700 w-32">
-                Representing
-              </h3>
-              <p className="text-gray-600 pl-8 capitalize">
-                {userData.representing || "N/A"}
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -184,6 +233,8 @@ const Profile = () => {
         onClose={() => setIsEditModelOpen(false)}
         oldData={userData}
       />
+
+    
     </main>
   );
 };
