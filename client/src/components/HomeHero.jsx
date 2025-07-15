@@ -20,8 +20,8 @@ const Hero = () => {
             </p>
 
             <div className=" animate-pulse ">
-              <button onClick={()=> navigate("/login") } className="bg-[#b04242] cursor-pointer text-white font-bold border-2 border-transparent px-8 py-3 m-2 hover:bg-[#E8D5B5] hover:text-[#4A3529] hover:border-[#D4AF37] transition-all duration-300  shadow-md hover:shadow-lg rounded-lg hover:scale-[1.02]">
-               Login/Register
+              <button onClick={()=> navigate("/register") } className="bg-[#b04242] cursor-pointer text-white font-bold border-2 border-transparent px-8 py-3 m-2 hover:bg-[#E8D5B5] hover:text-[#4A3529] hover:border-[#D4AF37] transition-all duration-300  shadow-md hover:shadow-lg rounded-lg hover:scale-[1.02]">
+               Register
               </button>
 
               <button className="bg-[#FAF7F0] cursor-pointer text-[#B38B6D] font-bold border-2 border-transparent px-6 py-3 m-2 hover:bg-[#F0E6D2] hover:text-[#8A6D56] hover:border-[#C8D5BB] transition-all duration-300 shadow-sm hover:shadow-md rounded-lg hover:scale-[1.01]">

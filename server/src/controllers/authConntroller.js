@@ -13,27 +13,43 @@ export const registerUser = async (req, res, next) => {
       return next(error);
     }
 
-    const hashedpass = await bcrypt.hash(password, 10);
     const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    if (existingUser && existingUser.status === "Active") {
       const error = new Error("Email pahle se Register Hai");
       error.statusCode = 400;
       return next(error);
     }
 
 
+
+
+    const hashedpass = await bcrypt.hash(password, 10);
     const profilePic = `https://placehold.co/600x400?text=${firstname
       .charAt(0)
       .toUpperCase()}${lastname.charAt(0).toUpperCase()}`;
 
-    const newUser = await User.create({
-      firstname,
-      lastname,
-      email,
-      phonenumber,
-      password: hashedpass,
-      photo: profilePic,
-    });
+    if (existingUser && existingUser.status === "Inactive") {
+      existingUser.firstname = firstname;
+      existingUser.lastname = lastname;
+      existingUser.password = hashedpass;
+      existingUser.status = "Active";
+      existingUser.photo = profilePic;
+      existingUser.role = "User"
+      await existingUser.save();
+
+    }
+    else {
+      const newUser = await User.create({
+        firstname,
+        lastname,
+        email,
+        phonenumber,
+        password: hashedpass,
+        photo: profilePic,
+      });
+    }
+
+
     res.status(201).json({ message: "Registation Succecfull" });
   } catch (error) {
     next(error);
@@ -77,15 +93,15 @@ export const Deactivateuser = async (req, res, next,) => {
 
   try {
     const currentUser = req.user;
-    const {password, reason ,feedback } = req.body;
+    const { password, reason, feedback } = req.body;
 
-    if(!currentUser){
+    if (!currentUser) {
       const error = new Error("USer NOt Found Login Again")
       error.statusCode = 401;
       return next(error);
     }
 
-        const updatedUser = await User.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       currentUser._id,
       {
         gender: "N/A",
@@ -97,15 +113,15 @@ export const Deactivateuser = async (req, res, next,) => {
         representing: "N/A",
         photo: "N/A",
         role: "N/A",
-        password:"N/A",
+        password: "N/A",
         status: "Inactive",
       },
       { new: true }
     );
 
-    LogoutUser();
     await Deactivation.create({ userId: currentUser._id, reason, feedback });
- res.status(200).json({ message: "Sorry to see you go . . ." });
+    res.cookie("IDCard", "", { maxAge: 0 });
+    res.status(200).json({ message: "Account Deactivated Successfully" });
   } catch (error) {
     next(error);
   }

@@ -37,8 +37,6 @@ const indianStates = [
     "Uttarakhand",
     "West Bengal",
 ];
-
-
 const Districts = {
     "Andhra Pradesh": [
         "Anantapur",
@@ -248,8 +246,6 @@ const Districts = {
         "Vidisha"
     ]
 }
-
-
 const City = [
     "Indore",
     "Bhopal",

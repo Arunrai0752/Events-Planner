@@ -14,7 +14,7 @@ export const Protect =  async (req, res, next) => {
 
     const decode = await jwt.verify(token, process.env.JWT_SECRET);
 
-    const verifiedUser = await User.findById(decode.ID).select("-password");
+    const verifiedUser = await User.findById(decode.ID);
 
     if (!verifiedUser) {
       const error = new Error("Unauthorized !! Login Again");

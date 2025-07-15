@@ -26,7 +26,7 @@ const Loginpage = () => {
       toast.success(res.data.message);
       setEmail("");
       setPassword("");
-      navigate("/")
+      navigate("/CustomerDashboard")
     } catch (error) {
 toast.error(`Error: ${error?.response?.message || ""} | ${error?.response?.data?.message || "Something went wrong"}`);
     }
