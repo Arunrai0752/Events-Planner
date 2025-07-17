@@ -65,13 +65,16 @@ export const loginUser = async (req, res, next) => {
       error.statusCode = 409;
       return next(error);
     }
+
     const user = await User.findOne({ email });
     if (!user) {
       const error = new Error("User Not registered");
       error.statusCode = 408;
       return next(error);
     }
+
     const isVerified = await bcrypt.compare(password, user.password);
+    
     if (!isVerified) {
       const error = new Error("Invalid Username or Password");
       error.statusCode = 401;

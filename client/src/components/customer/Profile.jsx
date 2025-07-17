@@ -22,10 +22,10 @@ const Profile = () => {
   const [isEditModelOpen, setIsEditModelOpen] = useState(false)
 
   const [userData, setUserData] = useState({
-    firstname: "DevXArun",
-    lastname: "FSD",
-    email: "arunr2081@gmail.com",
-    phonenumber: "0000000000",
+    firstname: "",
+    lastname: "",
+    email: "",
+    phonenumber: "",
     photo: "",
   });
 
