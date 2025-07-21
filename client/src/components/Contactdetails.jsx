@@ -1,114 +1,177 @@
-import React from "react";
+import React, { useState } from "react";
 import { CiLocationOn } from "react-icons/ci";
 import { MdOutlineMail } from "react-icons/md";
 import { IoPhonePortraitOutline } from "react-icons/io5";
 import chat from "../assets/lets-chat.jpg";
+import toast from "react-hot-toast";
+import api from "../config/api.jsx";
 
 const Contactdetails = () => {
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    budget: "",
+    message: ""
+  });
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prev) => ({ ...prev, [name]: value }))
+  }
+
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault()
+
+    if (!userData.name || !userData.email || !userData.budget || !userData.message) {
+      toast.error("All Field Are Requeried");
+      return;
+    }
+
+
+    const res = await api.post("/public/contact", userData);
+    toast.success(res.data.message)
+    console.log(res.data.data);
+
+    setUserData({
+      name: "",
+      email: "",
+      budget: "",
+      message: ""
+    });
+
+  }
+
+
   return (
-    <>
-      <main>
-        <div className="bg-blue-100 w-screen grid    ">
-          <div className=" w-[85%] flex bg-gray-200 rounded-4xl text-center  justify-evenly mb-20 relative left-[7.5%] bottom-[80px]">
-            <div className=" w-[27%] grid p-5 gap-5 ">
-              <div className="flex justify-center">
-                <p className="text-6xl text-center ">
-                  <CiLocationOn />
-                </p>
-              </div>
-              <h1 className="text-4xl">Physical Address​</h1>
-              <p className="text-1xl leading-9">
-                Ricr, Minal Mall , 4th Floor , Raj Group , Coding Institute{" "}
-              </p>
+    <main className="bg-blue-50">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid md:grid-cols-3 gap-8 -mt-20">
+          <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="flex justify-center text-blue-600 mb-6">
+              <CiLocationOn className="text-5xl" />
             </div>
+            <h2 className="text-2xl font-bold text-center mb-4 text-gray-800">Physical Address</h2>
+            <p className="text-gray-600 text-center leading-relaxed">
+              Ricr, Minal Mall, 4th Floor<br />
+              Raj Group, Coding Institute
+            </p>
+          </div>
 
-            <div className=" w-[27%] grid  p-5 ">
-              <div className="flex justify-center">
-                <p className="text-6xl text-center ">
-                  <MdOutlineMail />
-                </p>
-              </div>
-              <h1 className="text-4xl">Email Address​</h1>
-              <p className="text-1xl grid leading-9">
-<a href="mailto:arunr2081@gmail.com" target="_blank" rel="noopener noreferrer">
-  arunr2081@gmail.com
-</a>
-
-<a href="mailto:realarunrai0752@gmail.com" target="_blank" rel="noopener noreferrer">
-  realarunrai0752@gmail.com
-</a>
-
-              </p>
+          <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="flex justify-center text-blue-600 mb-6">
+              <MdOutlineMail className="text-5xl" />
             </div>
-
-            <div className=" w-[27%] grid p-5  ">
-              <div className="flex justify-center">
-                <p className="text-6xl text-center ">
-                  <IoPhonePortraitOutline />
-                </p>
-              </div>
-              <h1 className="text-4xl">Phone Number​</h1>
-              <a href="tel: +919098209835" className="text-1xl leading-9">9098209835</a>
+            <h2 className="text-2xl font-bold text-center mb-4 text-gray-800">Email Address</h2>
+            <div className="text-gray-600 text-center space-y-2">
+              <a
+                href="mailto:arunr2081@gmail.com"
+                className="block hover:text-blue-600 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                arunr2081@gmail.com
+              </a>
+              <a
+                href="mailto:realarunrai0752@gmail.com"
+                className="block hover:text-blue-600 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                realarunrai0752@gmail.com
+              </a>
             </div>
           </div>
 
-          <div className=" w-[85%] flex bg-yellow-50  text-center  justify-evenly mb-20 relative left-[7.5%] bottom-[80px]">
-            <div className="w-[50%] ">
-              <img src={chat} alt="" className=" h-[900px] bg-center " />
+          <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="flex justify-center text-blue-600 mb-6">
+              <IoPhonePortraitOutline className="text-5xl" />
+            </div>
+            <h2 className="text-2xl font-bold text-center mb-4 text-gray-800">Phone Number</h2>
+            <a
+              href="tel:+919098209835"
+              className="text-gray-600 hover:text-blue-600 transition-colors block text-center"
+            >
+              +91 9098209835
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-16">
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="flex flex-col md:flex-row">
+            <div className="md:w-1/2">
+              <img
+                src={chat}
+                alt="Let's Chat"
+                className="w-full h-full object-cover"
+              />
             </div>
 
-            <div className="w-[50%]  bg-center ng-cover flex justify-center items-center  ">
-              <div className="h-[70%] w-full ">
-                <h1 className="text-4xl relative text-left py-15 ps-10 ">
-                  Let’s Chat
-                </h1>
+            <div className="md:w-1/2 p-12">
+              <h1 className="text-3xl font-bold text-gray-800 mb-8">Let's Chat</h1>
 
-                <div className=" grid ps-10  text-1xl p-10 gap-8 ">
+              <form className="space-y-6">
+                <div>
                   <input
-                    type="name"
+                    type="text"
+                    onChange={handleOnChange}
+                    value={userData.name}
+                    name="name"
                     placeholder="Name"
-                    className="outline-0 border-b-2"
+                    className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors"
                   />
+                </div>
 
+                <div>
                   <input
                     type="email"
+                    name="email"
+                    value={userData.email}
+                    onChange={handleOnChange}
                     placeholder="Email"
-                    className="outline-0 border-b-2"
+                    className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors"
                   />
+                </div>
 
-                  <select
-                    name="Budgets"
+                <div>
+                  <input
+                    name="budget"
+                    type="text"
                     id="budgets"
-                    className="outline-0 border-b-2"
+                    placeholder="Enter Your Budget"
+                    value={userData.budget}
+                    onChange={handleOnChange}
+                    className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none bg-transparent appearance-none"
                   >
-                    <option value="budgets">Budgets</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
 
+                  </input>
+                </div>
+
+                <div>
                   <textarea
-                  placeholder="Message"
-                    name=""
-                    className=" outline-0  border-b-2 h-[150px] pb-30 text-[18px]"
-                    id=""
+                    placeholder="Your Message"
+                    name="message"
+                    value={userData.message}
+                    onChange={handleOnChange}
+                    rows="5"
+                    className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors resize-none"
                   ></textarea>
                 </div>
 
-                <div className="flex justify-start p-10">
-                  <button
-                    type="submit"
-                    className=" bg-black text-white px-8 py-2 "
-                  >
-                    Send Message
-                  </button>
-                </div>
-              </div>
+                <button
+                  onClick={handleOnSubmit}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors duration-300"
+                >
+                  Send Message
+                </button>
+              </form>
             </div>
           </div>
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 };
 

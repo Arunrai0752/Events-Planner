@@ -45,7 +45,10 @@ const Profile = () => {
     fetchUserData();
   }, [isEditModelOpen ]);
 
+
+
   return (
+    
     <main className="bg-gradient-to-r from-red-200 flex justify-evenly items-center  w-[75vw] to-indigo-200 min-h-[90.7vh] absolute right-0 ">
       <div className="   bg-transperents  rounded-xl    text-center text-2xl gap-8">
         <div className="  py-20 border-b-2  p-70 flex flex-col items-center    ">

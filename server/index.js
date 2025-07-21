@@ -7,7 +7,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter from "./src/routes/userRoutes.js"
 import cloudinary from "./src/config/cloudinary.js";
-
+import PublicRouter from "./src/routes/PublicRouter.js"
 
 dotenv.config();
 const app = express();
@@ -18,7 +18,8 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.use("/auth", AuthRouter);
-app.use("/user", userRouter)
+app.use("/user", userRouter);
+app.use("/public" , PublicRouter)
 
 app.use((err, req, res, next) => {
   const errormessage = err.message || "Internal Server Error";

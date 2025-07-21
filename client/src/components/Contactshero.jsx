@@ -8,7 +8,7 @@ const Componenetshero = () => {
                         <h1 className="text-9xl  ">Contact Us</h1>
 
         </div>
-      </main>
+       </main>
     </>
   );
 };

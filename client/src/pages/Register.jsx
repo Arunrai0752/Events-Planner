@@ -20,7 +20,6 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(registerData);
 
     if (registerData.password !== registerData.cpassword) {
       toast.error("Passwords do not match.");
