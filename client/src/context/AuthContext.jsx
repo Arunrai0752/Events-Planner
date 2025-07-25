@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 
+
 const AuthContext = React.createContext();
 
-export const AuthProvider = (props) =>  {
+export const AuthProvider = (props) => {
 
-    const [user , setUser] = useState("");
-    const [isLogin , setISLogin] = useState(false);
-    const [isAdmin , setIsAdmin] = useState(false);
+    const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("EventUser")) || null );
+    const [isLogin, setISLogin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
-    useEffect(() => {}, []);
+    useEffect(() => { }, []);
 
     const value = {
 
@@ -27,3 +28,6 @@ export const AuthProvider = (props) =>  {
 
 }
 
+export const useAuth = () => {
+  return useContext(AuthContext);
+};

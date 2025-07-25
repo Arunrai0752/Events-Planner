@@ -4,41 +4,17 @@ import { FaHeart, FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import api from "../config/api";
 import toast from "react-hot-toast";
+import { useAuth } from "../context/AuthContext";
+
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState({ email: "", photo: "" });
-  const [loading, setLoading] = useState(true);
+  const { user, isLogin, isAdmin } = useAuth();
 
-  const fetchUserData = async () => {
-    try {
-      const res = await api.get("/user/profile");
-      setUserData(res.data.data);
-    } catch (error) {
-      if (error.response?.status !== 401) {
-        toast.error(
-          `Error: ${error.response?.status || error.message} | ${
-            error.response?.data.message || "Failed to fetch profile"
-          }`
-        );
-      }
-    } finally {
-      setLoading(false);
-    }
+  const handleClick = () => {
+    isAdmin ? navigate("/adminpanel") : navigate("/CustomerDashboard");
   };
 
-  const handleProfileLogin = () => {
-    if (!userData?.email) {
-      navigate("/login");
-    } else {
-      navigate("/CustomerDashboard");
-    }
-    window.location.reload();
-  };
-
-  useEffect(() => {
-    fetchUserData();
-  }, [navigate]);
 
   return (
     <nav className="bg-gradient-to-tl from-rose-200 to-pink-300 shadow-lg w-full fixed top-0 z-50">
@@ -104,23 +80,29 @@ const Navbar = () => {
           </div>
 
           <div className="ml-4 flex items-center md:ml-6">
-            <button
-              onClick={handleProfileLogin}
+           
+              {isLogin ? (
+                <button
+              onClick={handleClick}
               className="flex items-center space-x-2 bg-gradient-to-r from-rose-600 to-pink-500 text-white px-4 py-2 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-1000 hover:bg-rose-700"
             >
-              {userData?.photo ? (
-                <img
-                  src={userData.photo}
-                  alt="Profile"
-                  className="h-8 w-8 rounded-full object-cover border-2 border-white"
-                />
+                  <img
+                    src={user.photo}
+                    alt="User Dp"
+                    className="h-10 w-10 border rounded-full object-cover"
+                  />
+                  <span className="text-white">{user.firstname}, {user.lastname}</span>
+                 </button>
               ) : (
-                <FaUserCircle className="h-8 w-8 text-white" />
+                <button
+                  className="border p-3 rounded-md text-white"
+                  onClick={() => navigate("/login")}
+                >
+                
+                  Login
+                </button>
               )}
-              <span className="font-medium">
-                {loading ? "loading" : userData.email ? "MyProfile" : "LogIn"}
-              </span>
-            </button>
+           
           </div>
         </div>
       </div>

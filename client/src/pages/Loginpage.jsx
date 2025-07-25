@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../config/api.jsx";
 import {toast} from "react-hot-toast"
 import Profile from "../components/customer/Profile.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 
 const Loginpage = () => {
@@ -10,6 +11,13 @@ const Loginpage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { user,
+        isLogin,
+        isAdmin,
+        setUser,
+        setISLogin,
+        setIsAdmin,} = useAuth();
+
 
   const Submitform = async (e) => {
     e.preventDefault();
@@ -26,7 +34,12 @@ const Loginpage = () => {
       toast.success(res.data.message);
       setEmail("");
       setPassword("");
-      navigate("/CustomerDashboard")
+      setUser(res.data.data)
+      sessionStorage.setItem("EventUser" , JSON.stringify(res.data.data));
+      setISLogin(true)
+       res.data.data.role === "Admin" ?
+       (setIsAdmin(true), navigate("adminpanel")) 
+       : navigate("/CustomerDashboard") ; 
     } catch (error) {
 toast.error(`Error: ${error?.response?.message || ""} | ${error?.response?.data?.message || "Something went wrong"}`);
     }

@@ -12,6 +12,7 @@ import Loginpage from "./pages/Loginpage";
 import Register from "./pages/Register";
 import {Toaster} from "react-hot-toast"
 import CustomerDashboard from "./pages/CustomerDashboard";
+import Adminpanel from "./pages/Adminpanel";
 
 
 
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/login" element={<Loginpage/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/CustomerDashboard" element={<CustomerDashboard/>}/>
+        <Route path="/adminpanel" element={<Adminpanel/>}/>
       </Routes>
       {/* <Footer/> */}
     </BrowserRouter>
