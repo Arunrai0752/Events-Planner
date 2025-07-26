@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import User from "../models/userModel.js"
 
 const seedAdmin = async () => {
+    console.log("Starting admin seeder...");
 
     await ConnectDB();
 
@@ -17,8 +18,8 @@ const seedAdmin = async () => {
         lastname: "Rai",
         email: "admin@shaadiwala.com",
         phonenumber: "9876543210",
-        password: "secureAdminPass123",
-        photo: "", 
+        password: adminPassword,
+        photo: "hj",
         gender: "Male",
         representing: "N/A",
         occupation: "Administrator",
@@ -30,5 +31,24 @@ const seedAdmin = async () => {
         role: "Admin"
     }
 
+
+    const existingAdmin = await User.findOne({ role: "Admin" });
+
+    let admin;
+    if (existingAdmin) {
+        admin = await User.findByIdAndUpdate(existingAdmin._id, AdminUser, {
+            new: true,
+        });
+        console.log("Admin User Updated Successfully", admin.email);
+    } else {
+        admin = await User.create(AdminUser);
+        console.log("Admin User Created Successfully", admin.email);
+    }
+
+    process.exit(1);
+
     
+
 }
+
+seedAdmin();

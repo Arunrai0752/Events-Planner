@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RxCross2 } from "react-icons/rx";
-import api from '../../config/api';
+import api from '../../../config/api';
 
 const Deactivate = ({ isOpen1, onClose1, onDeactivate }) => {
     const [deactivationData, setDeactivationData] = useState({

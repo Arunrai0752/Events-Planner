@@ -15,7 +15,7 @@ import {
 } from "react-icons/fa";
 
 import { useNavigate } from "react-router-dom";
-import EditProfile from "./EditProfile.jsx";
+import EditProfile from "./Modal/EditProfile.jsx";
 
 const Profile = () => {
   const navigate = useNavigate();

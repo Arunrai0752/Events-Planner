@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import api from '../../config/api'
+import api from '../../../config/api.jsx'
 import { RxCross1 } from "react-icons/rx";
 import { IoCameraOutline } from "react-icons/io5";
 import toast from 'react-hot-toast';

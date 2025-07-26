@@ -38,7 +38,7 @@ const Loginpage = () => {
       sessionStorage.setItem("EventUser" , JSON.stringify(res.data.data));
       setISLogin(true)
        res.data.data.role === "Admin" ?
-       (setIsAdmin(true), navigate("adminpanel")) 
+       (setIsAdmin(true), navigate("/adminpanel")) 
        : navigate("/CustomerDashboard") ; 
     } catch (error) {
 toast.error(`Error: ${error?.response?.message || ""} | ${error?.response?.data?.message || "Something went wrong"}`);
