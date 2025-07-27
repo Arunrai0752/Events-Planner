@@ -9,13 +9,10 @@ import Feedback from "../components/Admin/CustomerFeedback";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-
-
-const CustomerDashboard = () => {
+const Adminpanel = () => {
   const navigate = useNavigate();
-  
   const [active, setActive] = useState("overview");
-  const { isLogin , isAdmin } = useAuth();
+  const { isLogin, isAdmin } = useAuth();
 
   useEffect(() => {
     if (!isLogin || !isAdmin) {
@@ -23,14 +20,17 @@ const CustomerDashboard = () => {
     }
   }, [isLogin, isAdmin, navigate]);
 
- 
   return (
-    <>
-      <div className="flex mt-20 w-screen ">
-        <Sidebar active={active} setActive={setActive} />
+    <div className="flex flex-col h-screen bg-gray-100">
+      
+      <div className="flex flex-1 overflow-hidden pt-20"> 
+        
+        <div className="fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 bg-white shadow-md z-10">
+          <Sidebar active={active} setActive={setActive} />
+        </div>
 
-        <div className=" ">
-          {active === "feedback" && <Feedback />}
+       
+        <div className="flex-1 ml-64 overflow-y-auto p-6">
           {active === "overview" && <Overview />}
           {active === "booking" && <Booking />}
           {active === "package" && <Package />}
@@ -39,8 +39,8 @@ const CustomerDashboard = () => {
           {active === "feedback" && <Feedback />}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default CustomerDashboard;
+export default Adminpanel;
