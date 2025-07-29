@@ -7,7 +7,8 @@ import toast from "react-hot-toast";
 import api from "../config/api.jsx";
 
 const Contactdetails = () => {
-  const [userData, setUserData] = useState({
+  const [loading, setLoading] = useState(false);
+  const [ContactData, setContactData] = useState({
     name: "",
     email: "",
     budget: "",
@@ -16,29 +17,40 @@ const Contactdetails = () => {
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prev) => ({ ...prev, [name]: value }))
+    setContactData((prev) => ({ ...prev, [name]: value }))
   }
 
 
   const handleOnSubmit = async (e) => {
     e.preventDefault()
+   
 
-    if (!userData.name || !userData.email || !userData.budget || !userData.message) {
+
+    if (!ContactData.name || !ContactData.email || !ContactData.budget || !ContactData.message) {
       toast.error("All Field Are Requeried");
       return;
     }
 
+      setLoading(true);
 
-    const res = await api.post("/public/contact", userData);
+    try {
+      const res = await api.post("/public/contact", ContactData);
     toast.success(res.data.message)
     console.log(res.data.data);
 
-    setUserData({
+    setContactData({
       name: "",
       email: "",
       budget: "",
       message: ""
     });
+      
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
 
   }
 
@@ -117,7 +129,7 @@ const Contactdetails = () => {
                   <input
                     type="text"
                     onChange={handleOnChange}
-                    value={userData.name}
+                    value={ContactData.name}
                     name="name"
                     placeholder="Name"
                     className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors"
@@ -128,7 +140,7 @@ const Contactdetails = () => {
                   <input
                     type="email"
                     name="email"
-                    value={userData.email}
+                    value={ContactData.email}
                     onChange={handleOnChange}
                     placeholder="Email"
                     className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors"
@@ -141,7 +153,7 @@ const Contactdetails = () => {
                     type="text"
                     id="budgets"
                     placeholder="Enter Your Budget"
-                    value={userData.budget}
+                    value={ContactData.budget}
                     onChange={handleOnChange}
                     className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none bg-transparent appearance-none"
                   >
@@ -153,7 +165,7 @@ const Contactdetails = () => {
                   <textarea
                     placeholder="Your Message"
                     name="message"
-                    value={userData.message}
+                    value={ContactData.message}
                     onChange={handleOnChange}
                     rows="5"
                     className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors resize-none"
