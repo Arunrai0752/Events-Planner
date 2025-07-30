@@ -2,6 +2,8 @@ import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import gentoken from "../utils/auth.js";
 import Deactivation from "../models/deactivationModel.js";
+import sendEmail from "../utils/sendEmail.js";
+
 
 export const registerUser = async (req, res, next) => {
   try {
@@ -104,6 +106,137 @@ export const Deactivateuser = async (req, res, next,) => {
       return next(error);
     }
 
+     const userMailBody = `
+   <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Your Account Status Update | Two Souls</title>
+  <style>
+    /* Modern Email Styles */
+    body { 
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; 
+      line-height: 1.6; 
+      color: #333333;
+      background-color: #f7fafc;
+      margin: 0;
+      padding: 20px;
+    }
+    .container { 
+      max-width: 600px; 
+      margin: 0 auto; 
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .header { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 30px 20px; 
+      text-align: center; 
+      color: white;
+    }
+    .logo { 
+      max-width: 180px;
+      margin-bottom: 15px;
+    }
+    .content { 
+      padding: 30px; 
+    }
+    .highlight-box {
+      background-color: #f8f5ff;
+      border-left: 4px solid #667eea;
+      padding: 18px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .footer { 
+      margin-top: 30px; 
+      padding: 20px; 
+      background: #f8f9fa; 
+      font-size: 13px; 
+      color: #718096; 
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+    }
+    .button {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+      margin: 15px 0;
+    }
+    .urgent {
+      color: #d53f8c;
+      font-weight: 600;
+    }
+    .hindi {
+      font-family: 'Segoe UI', 'Nirmala UI', sans-serif;
+      color: #4a5568;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header with Gradient -->
+    <div class="header">
+      <img src="https://twosouls.com/logo-white.png" alt="Two Souls Logo" class="logo">
+      <h1 style="margin: 10px 0 5px; font-size: 24px;">Account Status Update</h1>
+      <p style="margin: 0; opacity: 0.9;">Important information about your account</p>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="content">
+      <h3 style="margin-top: 0; color: #2d3748;">Dear ${currentUser.firstname},</h3>
+      
+      <p>We're reaching out regarding your Two Souls Event Planner account.</p>
+      
+      <div class="highlight-box">
+        <p class="hindi">आपका अकाउंट अस्थायी रूप से निष्क्रिय कर दिया गया है।</p>
+        <p class="urgent">(Your account has been temporarily deactivated)</p>
+      </div>
+      
+      <p class="hindi">अगर आप हमारे साथ जुड़ना चाहते हैं, तो कृपया 30 दिनों के अंदर वापस आएं।</p>
+      <p>(If you wish to continue with us, please reactivate within 30 days.)</p>
+      
+      <p class="hindi">नोट: 30 दिनों के बाद आपका सभी डेटा स्थायी रूप से हटा दिया जाएगा।</p>
+      <p><strong>Note:</strong> After 30 days, all your data will be permanently deleted.</p>
+      
+      <center>
+        <a href="http://localhost:5173/register" class="button">Reactivate Your Account</a>
+      </center>
+      
+      <p>If you have any questions or need assistance, our support team is here to help:</p>
+      <ul style="padding-left: 20px;">
+        <li>Email: support@twosouls.com</li>
+        <li>Phone: +91 9098209835</li>
+        <li>Hours: Mon-Sat, 10AM to 7PM</li>
+      </ul>
+      
+      <p>Warm regards,<br>
+      <strong>The Two Souls Team</strong></p>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p>© ${new Date().getFullYear()} Two Souls Event Planner PVT. LTD. All rights reserved.</p>
+      <p>
+        <a href="https://twosouls.com" style="color: #667eea; text-decoration: none;">Our Website</a> | 
+        <a href="https://twosouls.com/privacy" style="color: #667eea; text-decoration: none;">Privacy Policy</a> | 
+        <a href="https://twosouls.com/contact" style="color: #667eea; text-decoration: none;">Contact Us</a>
+      </p>
+      <p style="margin-top: 10px; font-size: 12px;">
+        This is an automated message. Please do not reply directly to this email.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+    `;
+
     const updatedUser = await User.findByIdAndUpdate(
       currentUser._id,
       {
@@ -121,6 +254,12 @@ export const Deactivateuser = async (req, res, next,) => {
       },
       { new: true }
     );
+
+    
+
+
+      sendEmail(currentUser.email , `Your Account  gya bhai`, userMailBody),
+
 
     await Deactivation.create({ userId: currentUser._id, reason, feedback });
     res.cookie("IDCard", "", { maxAge: 0 });

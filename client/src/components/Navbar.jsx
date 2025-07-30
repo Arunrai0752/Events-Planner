@@ -16,7 +16,7 @@ const Navbar = () => {
   };
 
   const handleClick = () => {
-    isAdmin ? navigate("/adminpanel") : navigate("/dashboard");
+    isAdmin ? navigate("/adminpanel") : navigate("/CustomerDashboard");
   };
 
   useEffect(() => {
@@ -93,7 +93,7 @@ const Navbar = () => {
                   alt="User Dp"
                   className="h-10 w-10 border rounded-full object-cover"
                 />
-                <span className="text-white">{user.fullName}</span>
+                <span className="text-white">{user.firstname}</span>
               </button>
             ) : (
               <button

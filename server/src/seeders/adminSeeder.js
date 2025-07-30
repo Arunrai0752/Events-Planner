@@ -19,7 +19,7 @@ const seedAdmin = async () => {
         email: "admin@shaadiwala.com",
         phonenumber: "9876543210",
         password: adminPassword,
-        photo: "hj",
+        photo: "https://placehold.co/600x400?text=A",
         gender: "Male",
         representing: "N/A",
         occupation: "Administrator",
