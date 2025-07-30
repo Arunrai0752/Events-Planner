@@ -198,7 +198,7 @@ export const UpdateContacts = async (req, res, next) => {
     // Send emails
     await Promise.all([
       sendEmail(updatedQuery.email, `Your Query Status: ${status}`, userMailBody),
-      sendEmail('admin@twosouls.com', `Query Updated: ${updatedQuery.subject}`, adminMailBody)
+      sendEmail(`${process.env.GMAIL_USER}`, `Query Updated: ${updatedQuery.subject}`, adminMailBody)
     ]);
 
     res.status(200).json({
