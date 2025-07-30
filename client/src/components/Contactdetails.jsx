@@ -8,42 +8,41 @@ import api from "../config/api.jsx";
 
 const Contactdetails = () => {
   const [loading, setLoading] = useState(false);
-  const [ContactData, setContactData] = useState({
+  const [contactData, setContactData] = useState({
     name: "",
     email: "",
-    budget: "",
+    phone: "",
+    subject: "",
     message: ""
   });
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-    setContactData((prev) => ({ ...prev, [name]: value }))
-  }
-
+    setContactData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleOnSubmit = async (e) => {
-    e.preventDefault()
-   
+    e.preventDefault();
 
-
-    if (!ContactData.name || !ContactData.email || !ContactData.budget || !ContactData.message) {
-      toast.error("All Field Are Requeried");
+    if (!contactData.name || !contactData.email || !contactData.phone || !contactData.subject || !contactData.message) {
+      toast.error("All fields are required");
       return;
     }
 
-      setLoading(true);
+    setLoading(true);
 
     try {
-      const res = await api.post("/public/contact", ContactData);
-    toast.success(res.data.message)
-    console.log(res.data.data);
+      const res = await api.post("/public/contact", contactData);
+      toast.success(res.data.message);
+      console.log(res.data.data);
 
-    setContactData({
-      name: "",
-      email: "",
-      budget: "",
-      message: ""
-    });
+      setContactData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: ""
+      });
       
     } catch (error) {
       toast.error("Something went wrong");
@@ -51,9 +50,7 @@ const Contactdetails = () => {
     } finally {
       setLoading(false);
     }
-
-  }
-
+  };
 
   return (
     <main className="bg-blue-50">
@@ -129,10 +126,11 @@ const Contactdetails = () => {
                   <input
                     type="text"
                     onChange={handleOnChange}
-                    value={ContactData.name}
+                    value={contactData.name}
                     name="name"
-                    placeholder="Name"
+                    placeholder="Name *"
                     className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors"
+                    required
                   />
                 </div>
 
@@ -140,43 +138,56 @@ const Contactdetails = () => {
                   <input
                     type="email"
                     name="email"
-                    value={ContactData.email}
+                    value={contactData.email}
                     onChange={handleOnChange}
-                    placeholder="Email"
+                    placeholder="Email *"
                     className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors"
+                    required
                   />
                 </div>
 
                 <div>
                   <input
-                    name="budget"
-                    type="text"
-                    id="budgets"
-                    placeholder="Enter Your Budget"
-                    value={ContactData.budget}
+                    type="tel"
+                    name="phone"
+                    value={contactData.phone}
                     onChange={handleOnChange}
-                    className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none bg-transparent appearance-none"
-                  >
+                    placeholder="Phone Number *"
+                    className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors"
+                    required
+                  />
+                </div>
 
-                  </input>
+                <div>
+                  <input
+                    type="text"
+                    name="subject"
+                    value={contactData.subject}
+                    onChange={handleOnChange}
+                    placeholder="Subject *"
+                    className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors"
+                    required
+                  />
                 </div>
 
                 <div>
                   <textarea
-                    placeholder="Your Message"
+                    placeholder="Your Message *"
                     name="message"
-                    value={ContactData.message}
+                    value={contactData.message}
                     onChange={handleOnChange}
                     rows="5"
                     className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors resize-none"
+                    required
                   ></textarea>
                 </div>
 
                 <button
                   onClick={handleOnSubmit}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors duration-300"
+                  disabled={loading}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors duration-300 disabled:opacity-50"
                 >
-                  Send Message
+                  {loading ? "Sending..." : "Send Message"}
                 </button>
               </form>
             </div>

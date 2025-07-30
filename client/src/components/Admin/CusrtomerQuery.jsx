@@ -1,248 +1,256 @@
-import React, { useState } from 'react';
-import { FiSearch, FiMail, FiUser, FiClock, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
+import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import api from "../../config/api";
+import toast from "react-hot-toast";
+import {
+  FaEye,
+  FaEdit,
+  FaSearch,
+  FaFilter,
+  FaEnvelope,
+  FaPhone,
+  FaUser,
+  FaClock,
+  FaCheckCircle,
+  FaExclamationCircle,
+} from "react-icons/fa";
+import ContactViewModal from "./modals/ContactViewModal.jsx";
 
-const CustomerQuery = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState('all');
 
- 
-  const queries = [
-    {
-      id: '#QU-1001',
-      customer: 'John Doe',
-      email: 'john@example.com',
-      subject: 'Package customization',
-      message: 'Can I customize my tour package?',
-      date: '2023-11-15',
-      status: 'resolved',
-      priority: 'medium'
-    },
-    {
-      id: '#QU-1002',
-      customer: 'Jane Smith',
-      email: 'jane@example.com',
-      subject: 'Payment issue',
-      message: 'Payment not reflecting in my account',
-      date: '2023-12-05',
-      status: 'pending',
-      priority: 'high'
-    },
-    {
-      id: '#QU-1003',
-      customer: 'Robert Johnson',
-      email: 'robert@example.com',
-      subject: 'Visa requirements',
-      message: 'What documents are needed for Thailand visa?',
-      date: '2023-11-22',
-      status: 'in-progress',
-      priority: 'low'
-    },
-    {
-      id: '#QU-1004',
-      customer: 'Emily Davis',
-      email: 'emily@example.com',
-      subject: 'Cancellation policy',
-      message: 'What is your cancellation policy?',
-      date: '2024-01-10',
-      status: 'pending',
-      priority: 'medium'
-    },
-  ];
+const CustomerQueries = () => {
+  const [queries, setQueries] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [selectedQuery, setSelectedQuery] = useState(null);
+  const [isContactViewModalOpen, setIsContactViewModalOpen] = useState(false);
 
-  // Filter queries based on search and active filter
-  const filteredQueries = queries.filter(query => {
-    const matchesSearch = query.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                         query.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         query.subject.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesFilter = activeFilter === 'all' || query.status === activeFilter;
-    return matchesSearch && matchesFilter;
-  });
-
-  const getStatusIcon = (status) => {
-    switch(status) {
-      case 'resolved': return <FiCheckCircle className="text-green-500" />;
-      case 'in-progress': return <FiClock className="text-blue-500" />;
-      case 'pending': return <FiAlertCircle className="text-yellow-500" />;
-      default: return <FiMail className="text-gray-500" />;
+  const fetchAllCoustomerQueries = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get("admin/contacts");
+      
+      let x = "message";
+      toast.success(res["data"][x]);
+      setQueries(res.data.data);
+    } catch (error) {
+      toast.error(
+        `Error : ${error.response?.status || error.message} | ${
+          error.response?.data.message || ""
+        }`
+      );
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const getPriorityBadge = (priority) => {
-    const classes = {
-      high: 'bg-red-100 text-red-800',
-      medium: 'bg-yellow-100 text-yellow-800',
-      low: 'bg-green-100 text-green-800'
+  const getStatusBadge = (status) => {
+    const statusConfig = {
+      Pending: {
+        color: "bg-yellow-100 text-yellow-800 border-yellow-200",
+        icon: FaClock,
+      },
+      Resolved: {
+        color: "bg-green-100 text-green-800 border-green-200",
+        icon: FaCheckCircle,
+      },
+      Rejected: {
+        color: "bg-red-100 text-red-800 border-red-200",
+        icon: FaExclamationCircle,
+      },
     };
+
+    const config = statusConfig[status] || statusConfig.Pending;
+    const IconComponent = config.icon;
+
     return (
-      <span className={`px-2 py-1 text-xs font-medium rounded-full ${classes[priority]}`}>
-        {priority}
+      <span
+        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium border ${config.color}`}
+      >
+        <IconComponent className="text-xs" />
+        {status?.charAt(0).toUpperCase() + status?.slice(1).replace("_", " ")}
       </span>
     );
   };
 
+  const filteredQueries = queries.filter((query) => {
+    const matchesSearch =
+      query.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      query.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      query.phone?.includes(searchTerm);
+
+    const matchesStatus =
+      statusFilter === "all" || query.status === statusFilter;
+
+
+    return matchesSearch && matchesStatus;
+  });
+
+  const handleViewQuery = (query) => {
+    setSelectedQuery(query);
+    setIsContactViewModalOpen(true);
+  };
+
+  //const handleStatusEdit = (query) => {};
+
+  useEffect(() => {
+    fetchAllCoustomerQueries();
+  }, [isContactViewModalOpen]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800">Customer Queries</h1>
-            <p className="text-gray-600">Manage and respond to customer inquiries</p>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto mt-4 md:mt-0">
-            {/* Search Bar */}
-            <div className="relative flex-1">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FiSearch className="text-gray-400" />
-              </div>
+    <>
+      <div className="bg-gray-50 min-h-[87vh] p-6 overflow-y-auto">
+        
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
+            Customer Queries
+          </h1>
+          <p className="text-gray-600">
+            Manage and respond to customer inquiries
+          </p>
+        </div>
+
+       
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="flex-1 relative">
+              <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search queries..."
-                className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by name, email, or phone..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
               />
             </div>
-            
-            {/* Filter Dropdown */}
-            <div className="relative">
+            <div className="flex items-center gap-2">
+              <FaFilter className="text-gray-400" />
               <select
-                className="appearance-none pl-3 pr-8 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
-                value={activeFilter}
-                onChange={(e) => setActiveFilter(e.target.value)}
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
               >
                 <option value="all">All Status</option>
-                <option value="pending">Pending</option>
-                <option value="in-progress">In Progress</option>
-                <option value="resolved">Resolved</option>
+                <option value="Pending">Pending</option>
+                <option value="Resolved">Resolved</option>
+                <option value="Rejected">Rejected</option>
               </select>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                <FiUser className="text-gray-400" />
-              </div>
             </div>
           </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">Total Queries</p>
-                <p className="text-xl font-bold text-gray-800 mt-1">24</p>
-              </div>
-              <div className="p-2 rounded-lg bg-blue-50 text-blue-600">
-                <FiMail size={18} />
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">Pending</p>
-                <p className="text-xl font-bold text-gray-800 mt-1">8</p>
-              </div>
-              <div className="p-2 rounded-lg bg-yellow-50 text-yellow-600">
-                <FiAlertCircle size={18} />
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">In Progress</p>
-                <p className="text-xl font-bold text-gray-800 mt-1">6</p>
-              </div>
-              <div className="p-2 rounded-lg bg-blue-50 text-blue-600">
-                <FiClock size={18} />
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">Resolved</p>
-                <p className="text-xl font-bold text-gray-800 mt-1">10</p>
-              </div>
-              <div className="p-2 rounded-lg bg-green-50 text-green-600">
-                <FiCheckCircle size={18} />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Queries Table */}
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Query ID
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Customer
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Subject
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Priority
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {filteredQueries.map((query) => (
-                  <tr key={query.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {query.id}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{query.customer}</div>
-                      <div className="text-sm text-gray-500">{query.email}</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm font-medium text-gray-900">{query.subject}</div>
-                      <div className="text-sm text-gray-500 line-clamp-1">{query.message}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {getPriorityBadge(query.priority)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        {getStatusIcon(query.status)}
-                        <span className="ml-2 text-sm text-gray-900 capitalize">{query.status}</span>
+     
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          {filteredQueries.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gradient-to-r from-indigo-50 to-purple-50 border-b border-gray-200">
+                  <tr>
+                    <th className="text-left px-6 py-4 font-semibold text-gray-700">
+                      <div className="flex items-center gap-2">
+                        <FaUser className="text-indigo-600" />
+                        Customer
                       </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {query.date}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <button className="text-blue-600 hover:text-blue-900 mr-3">View</button>
-                      <button className="text-gray-600 hover:text-gray-900">Reply</button>
-                    </td>
+                    </th>
+                    <th className="text-left px-6 py-4 font-semibold text-gray-700">
+                      <div className="flex items-center gap-2">
+                        <FaEnvelope className="text-indigo-600" />
+                        Email
+                      </div>
+                    </th>
+                    <th className="text-left px-6 py-4 font-semibold text-gray-700">
+                      <div className="flex items-center gap-2">
+                        <FaPhone className="text-indigo-600" />
+                        Phone
+                      </div>
+                    </th>
+                    <th className="text-left px-6 py-4 font-semibold text-gray-700">
+                      Status
+                    </th>
+                    <th className="text-left px-6 py-4 font-semibold text-gray-700">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {filteredQueries.map((query, index) => (
+                    <tr
+                      key={index}
+                      className="hover:bg-gray-50 transition-colors"
+                    >
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+                            {query.name?.charAt(0).toUpperCase()}
+                          </div>
+                          <div>
+                            <div className="font-medium text-gray-900">
+                              {query.name}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              Customer
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-gray-600">{query.email}</td>
+                      <td className="px-6 py-4 text-gray-600">{query.phone}</td>
+                      <td className="px-6 py-4">
+                        {getStatusBadge(query.status)}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleViewQuery(query)}
+                            className="px-3 py-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors flex gap-3 items-center"
+                          >
+                            <FaEye /> View Details
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FaEnvelope className="text-3xl text-gray-400" />
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                No Queries Found
+              </h3>
+              <p className="text-gray-500">
+                {searchTerm || statusFilter !== "all"
+                  ? "Try adjusting your search or filter criteria"
+                  : "No customer queries have been submitted yet"}
+              </p>
+            </div>
+          )}
         </div>
+
+        
       </div>
-    </div>
+
+     
+      <ContactViewModal
+        isOpen={isContactViewModalOpen}
+        onClose={() => setIsContactViewModalOpen(false)}
+        Query={selectedQuery}
+      />
+    </>
   );
 };
 
-export default CustomerQuery;
+export default CustomerQueries;

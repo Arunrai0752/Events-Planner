@@ -1,23 +1,32 @@
-import Public from "../models/publicModel.js"
+import Public from "../models/contactModel.js";
 
 export const ContactForm = async (req, res, next) => {
+    const { name, email, phone, subject, message } = req.body;
 
-    const { name, email, budget, message } = req.body;
-
-
-    if (!name || !email || !budget || !message) {
-        const error = new Error("All Fields Requeried");
+    if (!name || !email || !phone || !subject || !message) {
+        const error = new Error("All fields are required");
         error.statusCode = 400;
         return next(error);
     }
-    const Contactform = await Public.create({
-        name, email, budget, message,
-    })
 
-    
-    res.status(200).json({
-      message: `Contactform Submit SuccessFully`,
-      data: Contactform,
-    });
+    try {
+        const contactForm = await Public.create({
+            name,
+            email,
+            phone,
+            subject,
+            message,
+           
+        });
 
-}
+        res.status(200).json({
+            success: true,
+            message: "Contact form submitted successfully",
+            data: contactForm,
+        });
+
+    } catch (error) {
+        error.statusCode = 500;
+        next(error);
+    }
+};
