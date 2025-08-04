@@ -27,7 +27,6 @@ const Loginpage = () => {
       password: password,
     };
 
-    console.log(loginData);
 
     try {
       const res = await api.post("/auth/login", loginData);

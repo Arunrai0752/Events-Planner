@@ -8,6 +8,8 @@ import Query from "../components/Admin/CusrtomerQuery";
 import Feedback from "../components/Admin/CustomerFeedback";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import BanquetHall from "../components/Admin/BanquetHall";
+import CateringService from "../components/Admin/CateringService";
 
 const Adminpanel = () => {
   const navigate = useNavigate();
@@ -22,14 +24,14 @@ const Adminpanel = () => {
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
-      
-      <div className="flex flex-1 overflow-hidden pt-20"> 
-        
+
+      <div className="flex flex-1 overflow-hidden pt-20">
+
         <div className="fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 bg-white shadow-md z-10">
           <Sidebar active={active} setActive={setActive} />
         </div>
 
-       
+
         <div className="flex-1 ml-64 overflow-y-auto p-6">
           {active === "overview" && <Overview />}
           {active === "booking" && <Booking />}
@@ -37,6 +39,8 @@ const Adminpanel = () => {
           {active === "customer" && <Customer />}
           {active === "query" && <Query />}
           {active === "feedback" && <Feedback />}
+          {active === "banquetHall" && <BanquetHall />}
+          {active === "cateringService" && <CateringService />}
         </div>
       </div>
     </div>
