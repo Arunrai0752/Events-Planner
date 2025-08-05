@@ -6,6 +6,8 @@ import EditBanquetModal from "./modals/EditBanquetModal.jsx";
 import DeleteBanquetModal from "./modals/DeleteBanquetModal.jsx";
 import AddBanquetModal from "./modals/AddBanquetModal.jsx";
 import api from "../../config/api.jsx";
+import toast from "react-hot-toast";
+
 
 
 const BanquetHall = () => {
@@ -29,19 +31,22 @@ const BanquetHall = () => {
     const [deleteBanquetHallModel, setDeleteBanquetHallModel] = useState(false);
     const [selectedHall, setSelectedHall] = useState(null);
 
+
+
+    const fetchBanquetHalls = async () => {
+        try {
+
+            const res = await api.get("/hall/get")
+            setBanquetHalls(res.data.data)
+            toast.success(res.data.message)
+        } catch (error) {
+            toast.error("Error fetching banquet halls:", error);
+        }
+    };
+
+ 
     useEffect(() => {
-        const fetchBanquetHalls = async () => {
-            try {
 
-                const res = await api.get("/hall/get")
-                setBanquetHalls(res.data.data)
-                console.log(res.data.data);
-
-                toast.success(res.data.message)
-            } catch (error) {
-                toast.error("Error fetching banquet halls:", error);
-            }
-        };
 
         fetchBanquetHalls();
     }, []);
@@ -154,7 +159,7 @@ const BanquetHall = () => {
             {addBanquetHallModel && (
                 <AddBanquetModal
                     onClose={() => setAddBanquetHallModel(false)}
-                />)}
+                />)} 
         </>
     );
 };
