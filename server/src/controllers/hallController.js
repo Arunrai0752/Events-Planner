@@ -1,15 +1,12 @@
 import Banquet from "../models/BanquetMondel.js";
 
 export const Addhall = async (req, res, next) => {
-
-
-
     const {
         hallName,
         address,
         capacity,
         managerName,
-        // photos,
+        photos,
         contactNumber,
         email,
         rent,
@@ -22,7 +19,7 @@ export const Addhall = async (req, res, next) => {
         address,
         capacity,
         managerName,
-        // photos,
+        photos,
         contactNumber,
         email,
         rent,
@@ -45,7 +42,7 @@ export const Addhall = async (req, res, next) => {
             address,
             capacity: Number(capacity),
             managerName,
-            // photos: Array.isArray(photos) ? photos : [photos], // Ensure photos is an array
+            photos: Array.isArray(photos) ? photos : [photos], // Ensure photos is an array
             contactNumber,
             email,
             rent: Number(rent),

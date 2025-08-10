@@ -17,7 +17,7 @@ const AddBanquetModal = ({ onClose }) => {
     featureDescription: ""
   });
 
-  const [photoPreview, setPhotoPreview] = useState([]);
+  const [photoPreviews, setPhotoPreviews] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (e) => {
@@ -25,19 +25,82 @@ const AddBanquetModal = ({ onClose }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handlePhotoChange = (e) => {
+    const images = Array.from(e.target.files);
 
+    // Validate number of photos (max 10)
+    if (images.length + formData.photos.length > 10) {
+      toast.error("You can upload a maximum of 10 photos");
+      return;
+    }
+
+    // Validate file types and sizes
+    const validImages = images.filter(image => {
+      if (!image.type.match('image.*')) {
+        toast.error(`${image.name} is not an image file`);
+        return false;
+      }
+      if (image.size > 5 * 1024 * 1024) { // 5MB limit
+        toast.error(`${image.name} is too large (max 5MB)`);
+        return false;
+      }
+      return true;
+    });
+
+    // Create preview URLs
+    const newPreviews = validImages.map(image => URL.createObjectURL(image));
+    
+    // Update both previews and formData.photos
+    setPhotoPreviews(prev => [...prev, ...newPreviews]);
+    setFormData(prev => ({
+      ...prev,
+      photos: [...prev.photos, ...validImages]
+    }));
+  };
+
+  const removePhoto = (index) => {
+    // Revoke the object URL to prevent memory leaks
+    URL.revokeObjectURL(photoPreviews[index]);
+    
+    // Remove from both previews and formData.photos
+    setPhotoPreviews(prev => prev.filter((_, i) => i !== index));
+    setFormData(prev => ({
+      ...prev,
+      photos: prev.photos.filter((_, i) => i !== index)
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
+      const formDataToSend = new FormData();
+      
+      // Append all regular form data
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key !== 'photos') {
+          formDataToSend.append(key, value);
+        }
+      });
+      
+      // Append all photo files
+      formData.photos.forEach(file => {
+        formDataToSend.append('photos', file);
+      });
 
-      const res = await api.post("/hall/Add", formData);
-      toast.success("Hall Add Successfully")
+      console.log(formData);
+      
+      const res = await api.post("/hall/Add", formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      
+      toast.success("Hall added successfully");
       onClose();
     } catch (error) {
-      toast.error("Error adding banquet hall:", error);
+      toast.error(error.response?.data?.message || "Error adding banquet hall");
     } finally {
       setIsSubmitting(false);
     }
@@ -48,10 +111,7 @@ const AddBanquetModal = ({ onClose }) => {
       <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center border-b p-4 sticky top-0 bg-white z-10">
           <h2 className="text-xl font-bold text-gray-800">Add New Banquet Hall</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
-          >
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
             <IoClose size={24} />
           </button>
         </div>
@@ -155,9 +215,9 @@ const AddBanquetModal = ({ onClose }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Photos</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Photos (Max 10)</label>
             <div className="flex flex-wrap gap-2 mb-2">
-              {photoPreview.map((preview, index) => (
+              {photoPreviews.map((preview, index) => (
                 <div key={index} className="relative">
                   <img
                     src={preview}
@@ -166,6 +226,7 @@ const AddBanquetModal = ({ onClose }) => {
                   />
                   <button
                     type="button"
+                    onClick={() => removePhoto(index)}
                     className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
                   >
                     <IoClose size={12} />
@@ -175,10 +236,12 @@ const AddBanquetModal = ({ onClose }) => {
             </div>
             <input
               type="file"
+              onChange={handlePhotoChange}
               multiple
               accept="image/*"
               className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
             />
+            <p className="text-xs text-gray-500 mt-1">Upload JPG, PNG files (max 5MB each)</p>
           </div>
 
           <div>
