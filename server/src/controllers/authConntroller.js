@@ -90,7 +90,7 @@ export const loginUser = async (req, res, next) => {
       data: user,
     });
   } catch (error) {
-   
+    next(error); 
   }
 };
 
