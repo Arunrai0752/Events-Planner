@@ -28,7 +28,6 @@ const AddBanquetModal = ({ onClose }) => {
   const handlePhotoChange = (e) => {
     const images = Array.from(e.target.files);
 
-    // Validate number of photos (max 10)
     if (images.length + formData.photos.length > 10) {
       toast.error("You can upload a maximum of 10 photos");
       return;
@@ -89,7 +88,7 @@ const AddBanquetModal = ({ onClose }) => {
         formDataToSend.append('photos', file);
       });
 
-      console.log(formData);
+      console.log(formDataToSend);
       
       const res = await api.post("/hall/Add", formDataToSend, {
         headers: {

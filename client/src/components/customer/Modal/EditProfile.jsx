@@ -382,8 +382,8 @@ const EditProfile = ({ isOpen, onClose, oldData }) => {
 
     if (!isOpen) return null;
     return (
-        <div className='bg-white/30 inset-0 fixed flex justify-center items-center'>
-            <div className='w-[60vw] h-[85vh] bg- /95 rounded-lg '>
+        <div className='bg-white/30 inset-0 fixed flex justify-center items-center z-100'>
+            <div className='w-[60vw] h-[85vh] bg- /95 rounded-lg bg-white shadow-lg overflow-y-auto '>
 
 
                 <div className=' flex  justify-between text-2xl p-5'>

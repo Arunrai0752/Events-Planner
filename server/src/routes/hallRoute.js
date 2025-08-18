@@ -9,8 +9,8 @@ const router = express.Router();
 
 
 
-router.post("/Add", Protect ,isAdmin , Addhall );
-router.get("/get", Protect ,isAdmin ,  getHalls );
+router.post("/Add", Protect ,isAdmin ,upload.array("photos", 10),  Addhall );
+router.get("/get", Protect, isAdmin,  getHalls);
 
 
 
