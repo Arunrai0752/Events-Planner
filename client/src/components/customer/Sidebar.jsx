@@ -7,14 +7,18 @@ import {
   FiMessageSquare,
   FiLogOut,
 } from "react-icons/fi";
-import api from "../../config/api";
+// import api from "../../config/api";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+
 
 const Sidebar = ({ active, setActive }) => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const handelLogout = async () => {
-    const res = await api.get("/auth/logout");
+    // const res = await api.get("/auth/logout");
+    setUser(null);
     navigate("/");
   };
 

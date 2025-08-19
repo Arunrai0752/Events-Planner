@@ -15,7 +15,7 @@ const Loginpage = () => {
         isLogin,
         isAdmin,
         setUser,
-        setISLogin,
+        setIsLogin,
         setIsAdmin,} = useAuth();
 
 
@@ -35,7 +35,7 @@ const Loginpage = () => {
       setPassword("");
       setUser(res.data.data)
       sessionStorage.setItem("EventUser" , JSON.stringify(res.data.data));
-      setISLogin(true)
+      setIsLogin(true)
        res.data.data.role === "Admin" ?
        (setIsAdmin(true), navigate("/adminpanel")) 
        : navigate("/CustomerDashboard") ; 

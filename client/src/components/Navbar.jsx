@@ -89,11 +89,11 @@ const Navbar = () => {
                 className="flex items-center space-x-2 bg-gradient-to-r from-rose-600 to-pink-500 text-white px-4 py-2 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-1000 hover:bg-rose-700"
               >
                 <img
-                  src={user.photo}
+                  src={user?.photo}
                   alt="User Dp"
                   className="h-10 w-10 border rounded-full object-cover"
                 />
-                <span className="text-white">{user.firstname}</span>
+                <span className="text-white">{user?.firstname}</span>
               </button>
             ) : (
               <button

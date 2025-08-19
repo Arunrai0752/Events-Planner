@@ -15,10 +15,12 @@ import {
   FiMap
 } from 'react-icons/fi';
 import { MdOutlineRestaurant, MdOutlineMeetingRoom } from 'react-icons/md';
+import { useAuth } from '../../context/AuthContext';
 
 const Sidebar = ({ active, setActive }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const { user,  setUse } = useAuth();
 
   const menuItems = [
     { id: 'overview', icon: <FiHome size={20} />, label: 'Overview' },
@@ -50,6 +52,15 @@ const Sidebar = ({ active, setActive }) => {
     const res = await api.get("/auth/logout");
     navigate("/");
   };
+
+
+  const handleLogout = ()=> {
+    setUser(null);
+    // setIsLogin(false);
+    // setIsAdmin(false);
+    // sessionStorage.removeItem("EventUser");
+    // navigate("/");
+  }
 
   return (
     <motion.div
@@ -118,7 +129,7 @@ const Sidebar = ({ active, setActive }) => {
 
       <div>
 
-        <button className='w-full py-5 border-t-1 border-gray-500'>
+        <button className='w-full py-5 border-t-1 border-gray-500' onClick={handleLogout}>
           LogOut
         </button>
       </div>

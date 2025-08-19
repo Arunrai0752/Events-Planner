@@ -16,29 +16,39 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import EditProfile from "./Modal/EditProfile.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [isEditModelOpen, setIsEditModelOpen] = useState(false)
+  const { user, isLogin  } = useAuth();
 
   const [userData, setUserData] = useState({
     firstname: "",
     lastname: "",
     email: "",
     phonenumber: "",
-    photo: "",
+    photo: null ,
   });
 
   const fetchUserData = async () => {
-    try {
-      const res = await api.get("/user/profile");
-      setUserData(res.data.data);
-    } catch (error) {
-      toast.error(
-        `Error : ${error.response?.status || error.message} | ${error.response?.data.message || ""
-        }`
-      );
-    }
+    // try {
+    //   const res = await api.get("/user/profile");
+    //   setUserData(res.data.data);
+    // } catch (error) {
+    //   toast.error(
+    //     `Error : ${error.response?.status || error.message} | ${error.response?.data.message || ""
+    //     }`
+    //   );
+    // }
+
+    setUserData({
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      phonenumber: user.phonenumber,
+      photo: user.photo,
+    });
   };
 
   useEffect(() => {
