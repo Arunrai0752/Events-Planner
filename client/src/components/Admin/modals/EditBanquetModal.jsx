@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaTimes } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 
 const EditBanquetModal = ({ hall, onClose }) => {
   const [formData, setFormData] = useState({
@@ -41,7 +41,6 @@ const EditBanquetModal = ({ hall, onClose }) => {
   };
 
   const handlePhotoChange = (e) => {
-    // In a real app, you would handle file uploads here
     const files = Array.from(e.target.files);
     const photoUrls = files.map(file => URL.createObjectURL(file));
     setFormData(prev => ({
@@ -50,155 +49,93 @@ const EditBanquetModal = ({ hall, onClose }) => {
     }));
   };
 
-
-
-
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
-
+    // Add API integration here later
+    console.log("Updated hall:", formData);
+    onClose();
   };
 
   if (!hall) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/40 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Edit Banquet Hall</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <FaTimes size={24} />
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-fadeIn">
+        
+        {/* Header */}
+        <div className="flex justify-between items-center border-b px-5 py-4 sticky top-0 bg-white z-10">
+          <h2 className="text-xl font-bold text-gray-800">Edit Banquet Hall</h2>
+          <button 
+            onClick={onClose} 
+            className="text-gray-500 hover:text-red-500 transition"
+          >
+            <IoClose size={24} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-5 space-y-5">
+          
+          {/* Grid Inputs */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Hall Name</label>
-              <input
-                type="text"
-                name="hallName"
-                value={formData.hallName}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Manager Name</label>
-              <input
-                type="text"
-                name="managerName"
-                value={formData.managerName}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Contact Number</label>
-              <input
-                type="text"
-                name="contactNumber"
-                value={formData.contactNumber}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Address</label>
-              <input
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Capacity</label>
-              <input
-                type="text"
-                name="capacity"
-                value={formData.capacity}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Rent (₹)</label>
-              <input
-                type="text"
-                name="rent"
-                value={formData.rent}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Minimum Booking Amount (₹)</label>
-              <input
-                type="text"
-                name="minBookingAmount"
-                value={formData.minBookingAmount}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
+            {[
+              { label: "Hall Name", name: "hallName", type: "text" },
+              { label: "Manager Name", name: "managerName", type: "text" },
+              { label: "Contact Number", name: "contactNumber", type: "tel" },
+              { label: "Email", name: "email", type: "email" },
+              { label: "Address", name: "address", type: "text" },
+              { label: "Capacity", name: "capacity", type: "number" },
+              { label: "Rent (₹)", name: "rent", type: "number" },
+              { label: "Minimum Booking Amount (₹)", name: "minBookingAmount", type: "number" },
+            ].map((field, i) => (
+              <div key={i}>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {field.label}
+                </label>
+                <input
+                  type={field.type}
+                  name={field.name}
+                  value={formData[field.name]}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+              </div>
+            ))}
           </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Feature Description</label>
+          {/* Feature Description */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Feature Description</label>
             <textarea
               name="featureDescription"
               value={formData.featureDescription}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
               rows="3"
               required
+              className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Photos</label>
+          {/* Photos */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Photos</label>
             <input
               type="file"
               multiple
+              accept="image/*"
               onChange={handlePhotoChange}
-              className="w-full px-3 py-2 border rounded"
+              className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 
+                         file:rounded file:border-0 file:text-sm file:font-semibold 
+                         file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
             />
-            <div className="flex flex-wrap gap-2 mt-2">
+            <div className="flex flex-wrap gap-2 mt-3">
               {formData.photos.map((photo, index) => (
                 <div key={index} className="relative">
                   <img
                     src={photo}
                     alt={`Hall ${index + 1}`}
-                    className="w-24 h-24 object-cover rounded"
+                    className="w-24 h-24 object-cover rounded-md shadow"
                   />
                   <button
                     type="button"
@@ -206,30 +143,32 @@ const EditBanquetModal = ({ hall, onClose }) => {
                       const updatedPhotos = formData.photos.filter((_, i) => i !== index);
                       setFormData(prev => ({ ...prev, photos: updatedPhotos }));
                     }}
-                    className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center"
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
                   >
-                    ×
+                    <IoClose size={14} />
                   </button>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 mt-4">
+          {/* Buttons */}
+          <div className="flex justify-end gap-3 pt-4 border-t">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
             >
               Save Changes
             </button>
           </div>
+
         </form>
       </div>
     </div>

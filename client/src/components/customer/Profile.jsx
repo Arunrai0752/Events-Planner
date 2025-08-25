@@ -32,16 +32,6 @@ const Profile = () => {
   });
 
   const fetchUserData = async () => {
-    // try {
-    //   const res = await api.get("/user/profile");
-    //   setUserData(res.data.data);
-    // } catch (error) {
-    //   toast.error(
-    //     `Error : ${error.response?.status || error.message} | ${error.response?.data.message || ""
-    //     }`
-    //   );
-    // }
-
     setUserData({
       firstname: user.firstname,
       lastname: user.lastname,
@@ -55,188 +45,150 @@ const Profile = () => {
     fetchUserData();
   }, [isEditModelOpen ]);
 
-
-
   return (
-    
-    <main className="bg-gradient-to-r from-red-200 flex justify-evenly items-center  w-[75vw] to-indigo-200 min-h-[90.7vh] absolute right-0 ">
-      <div className="   bg-transperents  rounded-xl    text-center text-2xl gap-8">
-        <div className="  py-20 border-b-2  p-70 flex flex-col items-center    ">
+    <main className="bg-gradient-to-r from-base-200 to-base-300 flex justify-evenly items-center w-[75vw] min-h-[90.7vh] absolute right-0">
+      <div className="bg-base-100 rounded-xl shadow-lg text-center text-2xl gap-8 w-full max-w-4xl mx-4">
+        <div className="py-12 border-b-2 border-base-300 flex flex-col items-center">
           <div className="relative mb-6">
-            <div
-              className=" h-32 w-32 rounded-full  flex items-center justify-center  bg-amber-400
-                "
-            >
+            <div className="h-32 w-32 rounded-full flex items-center justify-center bg-primary/20">
               <img
                 src={userData.photo}
                 alt=""
-                className="h-32 w-32 rounded-full object-cover "
+                className="h-32 w-32 rounded-full object-cover border-4 border-primary/30"
               />
             </div>
           </div>
-          <h2 className="text-2xl font-semibold text-gray-800">
+          <h2 className="text-2xl font-semibold text-base-content">
             {userData.firstname} {userData.lastname}
           </h2>
-          <p className="text-gray-500 mt-1">Member since 2025</p>
+          <p className="text-base-content/70 mt-1">Member since 2025</p>
           <button
-            className=" px-6 py-2 mt-2  bg-yellow-500 text-white rounded-lg hover:bg-red-700 transition-colors"
+            className="px-6 py-2 mt-4 bg-primary text-primary-content rounded-lg hover:bg-primary/90 transition-colors"
             onClick={() => { setIsEditModelOpen(true) }}
           >
             Edit Profile
           </button>
 
-          <div className=" p-6   ">
-            <div className=" flex items-center  ">
-              <div className="flex items-center justify-between mb-4">
-                <div className="bg-blue-100 p-3 rounded-full mr-4">
-                  <TfiEmail className="text-blue-600 text-xl" />
+          <div className="p-6 w-full">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center">
+                <div className="bg-info/20 p-3 rounded-full mr-4">
+                  <TfiEmail className="text-info text-xl" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-700">
+                <h3 className="text-lg font-medium text-base-content">
                   Email Address
                 </h3>
               </div>
-              <p className="text-gray-600 pl-16">{userData.email}</p>
+              <p className="text-base-content/80">{userData.email}</p>
             </div>
 
-            <div className=" flex items-center   ">
-              <div className="flex items-center justify-between  mb-4">
-                <div className="bg-green-100 p-3 rounded-full mr-4">
-                  <LuPhone className="text-green-600 text-xl" />
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center">
+                <div className="bg-success/20 p-3 rounded-full mr-4">
+                  <LuPhone className="text-success text-xl" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-700">
+                <h3 className="text-lg font-medium text-base-content">
                   Phone Number
                 </h3>
               </div>
-              <p className="text-gray-600 pl-16">{userData.phonenumber}</p>
+              <p className="text-base-content/80">{userData.phonenumber}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-transparent  justify-center items-center h-[87vh]  px-20  text-center text-2xl gap-8 w-full">
-          <div className="p-5 text-3xl text-center border-b-2">
-            Additional information
+        <div className="bg-base-100 px-8 py-6 text-center">
+          <div className="p-4 text-2xl font-semibold text-base-content border-b-2 border-base-300">
+            Additional Information
           </div>
 
-          <div className="flex   justify-center  py-10 items-center">
-
-
-
-
-
-            <div className="grid gap-10">
-              <div className="flex">
-
-                <div className="bg-green-100 p-3 rounded-full mr-4">
+          <div className="flex justify-center py-8 items-start gap-16">
+            <div className="grid gap-8">
+              <div className="flex items-center">
+                <div className="bg-primary/20 p-3 rounded-full mr-4">
                   {userData.gender === "male" ? (
-                    <FaMars className="text-green-600 text-xl" />
+                    <FaMars className="text-primary text-xl" />
                   ) : userData.gender === "female" ? (
-                    <FaVenus className="text-green-600 text-xl" />
+                    <FaVenus className="text-primary text-xl" />
                   ) : (
-                    <FaTransgender className="text-green-600 text-xl" />
+                    <FaTransgender className="text-primary text-xl" />
                   )}
                 </div>
-                <h3 className="text-lg font-medium text-gray-700 w-32">Gender</h3>
-
+                <h3 className="text-lg font-medium text-base-content w-32">Gender</h3>
               </div>
 
-
-              <div className="flex">
-
-                <div className="bg-green-100 p-3 rounded-full mr-4">
-                  <FaBriefcase className="text-green-600 text-xl" />
+              <div className="flex items-center">
+                <div className="bg-secondary/20 p-3 rounded-full mr-4">
+                  <FaBriefcase className="text-secondary text-xl" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-700 w-32">
+                <h3 className="text-lg font-medium text-base-content w-32">
                   Occupation
                 </h3>
-
               </div>
 
-
-              <div className="flex">
-
-                <div className="bg-green-100 p-3 rounded-full mr-4">
-                  <FaHome className="text-green-600 text-xl" />
+              <div className="flex items-center">
+                <div className="bg-accent/20 p-3 rounded-full mr-4">
+                  <FaHome className="text-accent text-xl" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-700 w-32">
+                <h3 className="text-lg font-medium text-base-content w-32">
                   Address
                 </h3>
-
-
-
               </div>
 
-              <div className="flex">
-
-                <div className="bg-green-100 p-3 rounded-full mr-4">
-                  <FaMapMarkerAlt className="text-green-600 text-xl" />
+              <div className="flex items-center">
+                <div className="bg-info/20 p-3 rounded-full mr-4">
+                  <FaMapMarkerAlt className="text-info text-xl" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-700 w-32">City</h3>
-
+                <h3 className="text-lg font-medium text-base-content w-32">City</h3>
               </div>
 
-              <div className="flex">
-
-                <div className="bg-green-100 p-3 rounded-full mr-4">
-                  <FaFlag className="text-green-600 text-xl" />
+              <div className="flex items-center">
+                <div className="bg-warning/20 p-3 rounded-full mr-4">
+                  <FaFlag className="text-warning text-xl" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-700 w-32">State</h3>
-
-
+                <h3 className="text-lg font-medium text-base-content w-32">State</h3>
               </div>
 
-              <div className="flex">
-
-                <div className="bg-green-100 p-3 rounded-full mr-4">
-                  <FaUserTie className="text-green-600 text-xl" />
+              <div className="flex items-center">
+                <div className="bg-success/20 p-3 rounded-full mr-4">
+                  <FaUserTie className="text-success text-xl" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-700 w-32">
+                <h3 className="text-lg font-medium text-base-content w-32">
                   Representing
                 </h3>
-
-
               </div>
             </div>
 
-
-            <div className="grid gap-10">
-              <div className="flex items-center mb-2">
-
-                <p className="text-gray-600 pl-8 capitalize">
+            <div className="grid gap-8">
+              <div className="flex items-center h-12">
+                <p className="text-base-content/80 capitalize min-w-[120px] text-left">
                   {userData.gender || "N/A"}
                 </p>
               </div>
 
-              <div className="flex items-center mb-2">
-
-                <p className="text-gray-600 pl-8">
+              <div className="flex items-center h-12">
+                <p className="text-base-content/80 min-w-[120px] text-left">
                   {userData.occupation || "N/A"}
                 </p>
               </div>
 
-              <div className="flex items-center mb-2">
-
-                <p className="text-gray-600 pl-8">{userData.address || "N/A"}</p>
+              <div className="flex items-center h-12">
+                <p className="text-base-content/80 min-w-[120px] text-left">{userData.address || "N/A"}</p>
               </div>
 
-              <div className="flex items-center mb-2">
-
-                <p className="text-gray-600 pl-8">{userData.city || "N/A"}</p>
+              <div className="flex items-center h-12">
+                <p className="text-base-content/80 min-w-[120px] text-left">{userData.city || "N/A"}</p>
               </div>
 
-              <div className="flex items-center mb-2">
-
-                <p className="text-gray-600 pl-8">{userData.state || "N/A"}</p>
+              <div className="flex items-center h-12">
+                <p className="text-base-content/80 min-w-[120px] text-left">{userData.state || "N/A"}</p>
               </div>
 
-              <div className="flex items-center mb-2">
-
-                <p className="text-gray-600 pl-8 capitalize">
+              <div className="flex items-center h-12">
+                <p className="text-base-content/80 capitalize min-w-[120px] text-left">
                   {userData.representing || "N/A"}
                 </p>
               </div>
             </div>
-
-
           </div>
         </div>
       </div>
@@ -246,9 +198,8 @@ const Profile = () => {
         onClose={() => setIsEditModelOpen(false)}
         oldData={userData}
       />
-
-    
     </main>
   );
 };
+
 export default Profile;

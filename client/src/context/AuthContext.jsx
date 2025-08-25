@@ -7,9 +7,11 @@ const AuthContext = React.createContext();
 
 export const AuthProvider = (props) => {
 
-  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("EventUser")) || null);
-  const [isLogin, setIsLogin] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const savedUser = JSON.parse(sessionStorage.getItem("EventUser")) || null;
+  const [user, setUser] = useState(savedUser);
+  const [isLogin, setIsLogin] = useState(!!savedUser);
+  const [isAdmin, setIsAdmin] = useState(savedUser?.role === "Admin");
+
 
 
   useEffect(() => {
@@ -18,12 +20,12 @@ export const AuthProvider = (props) => {
       setIsLogin(true);
       setIsAdmin(user.role === "Admin");
     }
-  else {
+    else {
 
       sessionStorage.removeItem("EventUser");
       setIsLogin(false);
       setIsAdmin(false);
-  }
+    }
 
   }, [user]);
 

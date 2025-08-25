@@ -22,7 +22,7 @@ const AddBanquetModal = ({ onClose }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handlePhotoChange = (e) => {
@@ -33,37 +33,33 @@ const AddBanquetModal = ({ onClose }) => {
       return;
     }
 
-    // Validate file types and sizes
-    const validImages = images.filter(image => {
-      if (!image.type.match('image.*')) {
+    const validImages = images.filter((image) => {
+      if (!image.type.match("image.*")) {
         toast.error(`${image.name} is not an image file`);
         return false;
       }
-      if (image.size > 5 * 1024 * 1024) { // 5MB limit
+      if (image.size > 5 * 1024 * 1024) {
         toast.error(`${image.name} is too large (max 5MB)`);
         return false;
       }
       return true;
     });
 
-    // Create preview URLs
-    const newPreviews = validImages.map(image => URL.createObjectURL(image));
-    
-    // Update both previews and formData.photos
-    setPhotoPreviews(prev => [...prev, ...newPreviews]);
-    setFormData(prev => ({
+    const newPreviews = validImages.map((image) =>
+      URL.createObjectURL(image)
+    );
+
+    setPhotoPreviews((prev) => [...prev, ...newPreviews]);
+    setFormData((prev) => ({
       ...prev,
       photos: [...prev.photos, ...validImages]
     }));
   };
 
   const removePhoto = (index) => {
-    // Revoke the object URL to prevent memory leaks
     URL.revokeObjectURL(photoPreviews[index]);
-    
-    // Remove from both previews and formData.photos
-    setPhotoPreviews(prev => prev.filter((_, i) => i !== index));
-    setFormData(prev => ({
+    setPhotoPreviews((prev) => prev.filter((_, i) => i !== index));
+    setFormData((prev) => ({
       ...prev,
       photos: prev.photos.filter((_, i) => i !== index)
     }));
@@ -75,27 +71,19 @@ const AddBanquetModal = ({ onClose }) => {
 
     try {
       const formDataToSend = new FormData();
-      
-      // Append all regular form data
+
       Object.entries(formData).forEach(([key, value]) => {
-        if (key !== 'photos') {
-          formDataToSend.append(key, value);
-        }
-      });
-      
-      // Append all photo files
-      formData.photos.forEach(file => {
-        formDataToSend.append('photos', file);
+        if (key !== "photos") formDataToSend.append(key, value);
       });
 
-      console.log(formDataToSend);
-      
-      const res = await api.post("/hall/Add", formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+      formData.photos.forEach((file) => {
+        formDataToSend.append("photos", file);
       });
-      
+
+      await api.post("/hall/Add", formDataToSend, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
+
       toast.success("Hall added successfully");
       onClose();
     } catch (error) {
@@ -106,127 +94,155 @@ const AddBanquetModal = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center border-b p-4 sticky top-0 bg-white z-10">
-          <h2 className="text-xl font-bold text-gray-800">Add New Banquet Hall</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <IoClose size={24} />
+    <div className="modal modal-open">
+      <div className="modal-box max-w-2xl">
+        {/* Header */}
+        <div className="flex justify-between items-center border-b pb-3">
+          <h2 className="text-lg font-bold">Add New Banquet Hall</h2>
+          <button onClick={onClose} className="btn btn-sm btn-ghost">
+            <IoClose size={20} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-4 space-y-4">
+        <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Hall Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Hall Name*</label>
+              <label className="label">
+                <span className="label-text">Hall Name*</span>
+              </label>
               <input
                 type="text"
                 name="hallName"
                 value={formData.hallName}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="input input-bordered w-full"
               />
             </div>
 
+            {/* Address */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Address*</label>
+              <label className="label">
+                <span className="label-text">Address*</span>
+              </label>
               <input
                 type="text"
                 name="address"
                 value={formData.address}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="input input-bordered w-full"
               />
             </div>
 
+            {/* Capacity */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Capacity*</label>
+              <label className="label">
+                <span className="label-text">Capacity*</span>
+              </label>
               <input
                 type="number"
                 name="capacity"
                 value={formData.capacity}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="input input-bordered w-full"
               />
             </div>
 
+            {/* Manager Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Manager Name*</label>
+              <label className="label">
+                <span className="label-text">Manager Name*</span>
+              </label>
               <input
                 type="text"
                 name="managerName"
                 value={formData.managerName}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="input input-bordered w-full"
               />
             </div>
 
+            {/* Contact Number */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Contact Number*</label>
+              <label className="label">
+                <span className="label-text">Contact Number*</span>
+              </label>
               <input
                 type="tel"
                 name="contactNumber"
                 value={formData.contactNumber}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="input input-bordered w-full"
               />
             </div>
 
+            {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="input input-bordered w-full"
               />
             </div>
 
+            {/* Rent */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Rent (₹)*</label>
+              <label className="label">
+                <span className="label-text">Rent (₹)*</span>
+              </label>
               <input
                 type="number"
                 name="rent"
                 value={formData.rent}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="input input-bordered w-full"
               />
             </div>
 
+            {/* Min Booking Amount */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Min Booking Amount (₹)*</label>
+              <label className="label">
+                <span className="label-text">Min Booking Amount (₹)*</span>
+              </label>
               <input
                 type="number"
                 name="minBookingAmount"
                 value={formData.minBookingAmount}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="input input-bordered w-full"
               />
             </div>
           </div>
 
+          {/* Photos */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Photos (Max 10)</label>
+            <label className="label">
+              <span className="label-text">Photos (Max 10)</span>
+            </label>
             <div className="flex flex-wrap gap-2 mb-2">
               {photoPreviews.map((preview, index) => (
                 <div key={index} className="relative">
                   <img
                     src={preview}
                     alt={`Preview ${index}`}
-                    className="h-20 w-20 object-cover rounded"
+                    className="h-20 w-20 object-cover rounded-lg border"
                   />
                   <button
                     type="button"
                     onClick={() => removePhoto(index)}
-                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
+                    className="btn btn-xs btn-error absolute -top-2 -right-2 rounded-full"
                   >
                     <IoClose size={12} />
                   </button>
@@ -238,35 +254,41 @@ const AddBanquetModal = ({ onClose }) => {
               onChange={handlePhotoChange}
               multiple
               accept="image/*"
-              className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              className="file-input file-input-bordered w-full"
             />
-            <p className="text-xs text-gray-500 mt-1">Upload JPG, PNG files (max 5MB each)</p>
+            <p className="text-xs text-gray-500 mt-1">
+              Upload JPG/PNG (max 5MB each)
+            </p>
           </div>
 
+          {/* Feature Description */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Feature Description*</label>
+            <label className="label">
+              <span className="label-text">Feature Description*</span>
+            </label>
             <textarea
               name="featureDescription"
               value={formData.featureDescription}
               onChange={handleInputChange}
               required
               rows={3}
-              className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="textarea textarea-bordered w-full"
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t">
+          {/* Footer Actions */}
+          <div className="modal-action">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              className="btn btn-ghost"
               disabled={isSubmitting}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-blue-300"
+              className={`btn btn-primary ${isSubmitting && "loading"}`}
               disabled={isSubmitting}
             >
               {isSubmitting ? "Saving..." : "Save Banquet Hall"}

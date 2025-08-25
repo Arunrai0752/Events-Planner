@@ -11,7 +11,7 @@ export const registerUser = async (req, res, next) => {
 
     if (!firstname || !lastname || !email || !phonenumber || !password) {
       const error = new Error("All Fields Requeried");
-      error.statusCode = 400;
+      error.statusCode = 409;
       return next(error);
     }
 
@@ -21,9 +21,6 @@ export const registerUser = async (req, res, next) => {
       error.statusCode = 400;
       return next(error);
     }
-
-
-
 
     const hashedpass = await bcrypt.hash(password, 10);
     const profilePic = `https://placehold.co/600x400?text=${firstname

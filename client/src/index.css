@@ -1,10 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Sevillana&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 @import "tailwindcss";
+@plugin "flyonui" {
+  
+   themes: all;
+}
+@import "flyonui/variants.css";
+@source "./node_modules/flyonui/flyonui.js"; 
 
 
 
-.sevillana-regular {
-  font-family: "Sevillana", cursive;
-  font-weight: 400;
-  font-style: normal;
+body{
+  font-family: var(--my-Font);
+}
+
+
+[data-theme="claude"] {
+  --my-Font: "Geist";
+}
+
+[data-theme="corporate"] {
+  --my-Font: "Public Sans";
+}
+
+[data-theme="ghibli"] {
+  --my-Font: "Amaranth";
+}
+
+[data-theme="gourmet"] {
+  --my-Font: "Rubik";
+}
+
+[data-theme="luxury"] {
+  --my-Font: "Archivo";
+}
+
+[data-theme="pastel"] {
+  --my-Font: "Open Sans";
+}
+
+[data-theme="slack"] {
+  --my-Font: "Lato";
+}
+
+[data-theme="soft"] {
+  --my-Font: "Montserrat";
+}
+
+[data-theme="spotify"] {
+  --my-Font: "Lato";
+}
+
+[data-theme="valorant"] {
+  --my-Font: "Work Sans";
+}
+
+[data-theme="vscode"] {
+  --my-Font: "Fira Code";
+}
+
+[data-theme="black"] {
+  --my-Font: "Public Sans";
 }

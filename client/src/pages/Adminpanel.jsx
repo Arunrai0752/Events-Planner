@@ -23,16 +23,15 @@ const Adminpanel = () => {
   }, [isLogin, isAdmin, navigate]);
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-
+    <div className="flex flex-col h-screen bg-base-200">
       <div className="flex flex-1 overflow-hidden pt-20">
-
-        <div className="fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 bg-white shadow-md z-10">
+        {/* Sidebar */}
+        <div className="fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 bg-base-100 shadow-base-300 z-10">
           <Sidebar active={active} setActive={setActive} />
         </div>
 
-
-        <div className="flex-1 ml-64 overflow-y-auto p-6">
+        {/* Main Content */}
+        <div className="flex-1 ml-64 overflow-y-auto p-6 bg-base-100 text-base-content rounded-lg shadow-base-300">
           {active === "overview" && <Overview />}
           {active === "booking" && <Booking />}
           {active === "package" && <Package />}

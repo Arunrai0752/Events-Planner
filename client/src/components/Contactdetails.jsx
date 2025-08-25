@@ -53,29 +53,29 @@ const Contactdetails = () => {
   };
 
   return (
-    <main className="bg-blue-50">
+    <main className="bg-base-200">
       <div className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-3 gap-8 -mt-20">
-          <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div className="flex justify-center text-blue-600 mb-6">
+          <div className="bg-base-100 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="flex justify-center text-primary mb-6">
               <CiLocationOn className="text-5xl" />
             </div>
-            <h2 className="text-2xl font-bold text-center mb-4 text-gray-800">Physical Address</h2>
-            <p className="text-gray-600 text-center leading-relaxed">
+            <h2 className="text-2xl font-bold text-center mb-4 text-base-content">Physical Address</h2>
+            <p className="text-base-content/70 text-center leading-relaxed">
               Ricr, Minal Mall, 4th Floor<br />
               Raj Group, Coding Institute
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div className="flex justify-center text-blue-600 mb-6">
+          <div className="bg-base-100 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="flex justify-center text-primary mb-6">
               <MdOutlineMail className="text-5xl" />
             </div>
-            <h2 className="text-2xl font-bold text-center mb-4 text-gray-800">Email Address</h2>
-            <div className="text-gray-600 text-center space-y-2">
+            <h2 className="text-2xl font-bold text-center mb-4 text-base-content">Email Address</h2>
+            <div className="text-base-content/70 text-center space-y-2">
               <a
                 href="mailto:arunr2081@gmail.com"
-                className="block hover:text-blue-600 transition-colors"
+                className="block hover:text-primary transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -83,7 +83,7 @@ const Contactdetails = () => {
               </a>
               <a
                 href="mailto:realarunrai0752@gmail.com"
-                className="block hover:text-blue-600 transition-colors"
+                className="block hover:text-primary transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -92,14 +92,14 @@ const Contactdetails = () => {
             </div>
           </div>
 
-          <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div className="flex justify-center text-blue-600 mb-6">
+          <div className="bg-base-100 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="flex justify-center text-primary mb-6">
               <IoPhonePortraitOutline className="text-5xl" />
             </div>
-            <h2 className="text-2xl font-bold text-center mb-4 text-gray-800">Phone Number</h2>
+            <h2 className="text-2xl font-bold text-center mb-4 text-base-content">Phone Number</h2>
             <a
               href="tel:+919098209835"
-              className="text-gray-600 hover:text-blue-600 transition-colors block text-center"
+              className="text-base-content/70 hover:text-primary transition-colors block text-center"
             >
               +91 9098209835
             </a>
@@ -108,7 +108,7 @@ const Contactdetails = () => {
       </div>
 
       <div className="container mx-auto px-4 py-16">
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-base-100 rounded-xl shadow-lg overflow-hidden">
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/2">
               <img
@@ -119,7 +119,7 @@ const Contactdetails = () => {
             </div>
 
             <div className="md:w-1/2 p-12">
-              <h1 className="text-3xl font-bold text-gray-800 mb-8">Let's Chat</h1>
+              <h1 className="text-3xl font-bold text-base-content mb-8">Let's Chat</h1>
 
               <form className="space-y-6">
                 <div>
@@ -129,7 +129,7 @@ const Contactdetails = () => {
                     value={contactData.name}
                     name="name"
                     placeholder="Name *"
-                    className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors"
+                    className="w-full px-4 py-3 border-b-2 border-base-300 focus:border-primary outline-none transition-colors bg-transparent"
                     required
                   />
                 </div>
@@ -141,7 +141,7 @@ const Contactdetails = () => {
                     value={contactData.email}
                     onChange={handleOnChange}
                     placeholder="Email *"
-                    className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors"
+                    className="w-full px-4 py-3 border-b-2 border-base-300 focus:border-primary outline-none transition-colors bg-transparent"
                     required
                   />
                 </div>
@@ -153,7 +153,7 @@ const Contactdetails = () => {
                     value={contactData.phone}
                     onChange={handleOnChange}
                     placeholder="Phone Number *"
-                    className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors"
+                    className="w-full px-4 py-3 border-b-2 border-base-300 focus:border-primary outline-none transition-colors bg-transparent"
                     required
                   />
                 </div>
@@ -165,7 +165,7 @@ const Contactdetails = () => {
                     value={contactData.subject}
                     onChange={handleOnChange}
                     placeholder="Subject *"
-                    className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors"
+                    className="w-full px-4 py-3 border-b-2 border-base-300 focus:border-primary outline-none transition-colors bg-transparent"
                     required
                   />
                 </div>
@@ -177,7 +177,7 @@ const Contactdetails = () => {
                     value={contactData.message}
                     onChange={handleOnChange}
                     rows="5"
-                    className="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors resize-none"
+                    className="w-full px-4 py-3 border-b-2 border-base-300 focus:border-primary outline-none transition-colors resize-none bg-transparent"
                     required
                   ></textarea>
                 </div>
@@ -185,7 +185,7 @@ const Contactdetails = () => {
                 <button
                   onClick={handleOnSubmit}
                   disabled={loading}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors duration-300 disabled:opacity-50"
+                  className="bg-primary hover:bg-primary-focus text-primary-content font-medium py-3 px-8 rounded-full transition-colors duration-300 disabled:opacity-50"
                 >
                   {loading ? "Sending..." : "Send Message"}
                 </button>

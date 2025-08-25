@@ -20,7 +20,7 @@ import { useAuth } from '../../context/AuthContext';
 const Sidebar = ({ active, setActive }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const { user,  setUse } = useAuth();
+  const { user, setUser } = useAuth();
 
   const menuItems = [
     { id: 'overview', icon: <FiHome size={20} />, label: 'Overview' },
@@ -32,7 +32,6 @@ const Sidebar = ({ active, setActive }) => {
     { id: 'cateringService', icon: <MdOutlineRestaurant size={20} />, label: 'Catering Service' },
     { id: 'banquetHall', icon: <MdOutlineMeetingRoom size={20} />, label: 'Banquet Hall' },
   ];
-
 
   const itemVariants = {
     open: {
@@ -47,24 +46,13 @@ const Sidebar = ({ active, setActive }) => {
     }
   };
 
-
-  const ha = async () => {
-    const res = await api.get("/auth/logout");
-    navigate("/");
-  };
-
-
-  const handleLogout = ()=> {
+  const handleLogout = () => {
     setUser(null);
-    // setIsLogin(false);
-    // setIsAdmin(false);
-    // sessionStorage.removeItem("EventUser");
-    // navigate("/");
-  }
+  };
 
   return (
     <motion.div
-      className={`min-h-[91vh] bg-gradient-to-b from-pink-800 to-pink-900 text-white flex flex-col
+      className={`min-h-[91vh] bg-primary  text-primary-content flex flex-col
         ${collapsed ? 'w-20' : 'w-64'}`}
       initial={false}
       animate={{
@@ -74,7 +62,7 @@ const Sidebar = ({ active, setActive }) => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div className={`flex items-center justify-between p-4 border-b border-pink-700`}>
+      <div className={`flex items-center justify-between p-4 border-b border-primary-focus`}>
         <AnimatePresence>
           {(!collapsed || hovered) && (
             <motion.h1
@@ -84,11 +72,16 @@ const Sidebar = ({ active, setActive }) => {
               exit="closed"
               variants={itemVariants}
             >
-              <span className="text-blue-300">Admin</span> Panel
+              <span className="text-accent">Admin</span> Panel
             </motion.h1>
           )}
         </AnimatePresence>
-
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="p-1 rounded-full hover:bg-primary-focus transition-colors"
+        >
+          {collapsed ? <FiChevronRight size={20} /> : <FiChevronLeft size={20} />}
+        </button>
       </div>
 
       <nav className="p-2 mt-4 flex-1 overflow-y-auto">
@@ -102,16 +95,16 @@ const Sidebar = ({ active, setActive }) => {
               <button
                 onClick={() => setActive(item.id)}
                 className={`flex items-center w-full p-3 rounded-lg transition-all duration-200
-                  ${active === item.id ? 'bg-pink-600 shadow-lg' : 'hover:bg-pink-700'}
+                  ${active === item.id ? 'bg-primary-focus shadow-lg' : 'hover:bg-primary-focus/80'}
                   ${collapsed ? 'justify-center' : 'px-4'}`}
               >
-                <span className={`${active === item.id ? 'text-white' : 'text-pink-200'}`}>
+                <span className={`${active === item.id ? 'text-accent' : 'text-primary-content/80'}`}>
                   {item.icon}
                 </span>
                 <AnimatePresence>
                   {(!collapsed || hovered) && (
                     <motion.span
-                      className={`ml-3 whitespace-nowrap ${collapsed && hovered ? 'absolute left-16 bg-pink-800 px-3 py-2 rounded-md shadow-lg z-50' : ''}`}
+                      className={`ml-3 whitespace-nowrap ${collapsed && hovered ? 'absolute left-16 bg-primary-focus px-3 py-2 rounded-md shadow-lg z-50' : ''}`}
                       initial="closed"
                       animate="open"
                       exit="closed"
@@ -127,14 +120,51 @@ const Sidebar = ({ active, setActive }) => {
         </ul>
       </nav>
 
-      <div>
+      <div className="p-4 border-t border-primary-focus">
+        <div className="flex items-center p-3 rounded-lg mb-4 bg-primary-focus/50">
+          <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
+            <span className="font-bold text-accent-content">
+              {user?.name?.charAt(0) || 'A'}
+            </span>
+          </div>
+          <AnimatePresence>
+            {(!collapsed || hovered) && (
+              <motion.div
+                className="ml-3 overflow-hidden"
+                initial="closed"
+                animate="open"
+                exit="closed"
+                variants={itemVariants}
+              >
+                <p className="text-sm font-medium truncate">{user?.name || 'Admin'}</p>
+                <p className="text-xs text-primary-content/70 truncate">{user?.email || 'admin@example.com'}</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-        <button className='w-full py-5 border-t-1 border-gray-500' onClick={handleLogout}>
-          LogOut
-        </button>
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={handleLogout}
+          className="flex items-center w-full p-3 rounded-lg transition-all duration-200 hover:bg-error/20 text-error-content"
+        >
+          <FiLogOut size={20} className="text-error" />
+          <AnimatePresence>
+            {(!collapsed || hovered) && (
+              <motion.span
+                className="ml-3 whitespace-nowrap"
+                initial="closed"
+                animate="open"
+                exit="closed"
+                variants={itemVariants}
+              >
+                Logout
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.button>
       </div>
-
-
     </motion.div>
   );
 };
